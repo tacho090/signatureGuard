@@ -6,7 +6,12 @@ import java.awt.image.BufferedImage;
 import java.awt.image.ColorConvertOp;
 import java.awt.image.DataBufferByte;
 import java.io.File;
-import org.opencv.core.*;
+
+import nu.pattern.OpenCV;
+import org.opencv.core.Mat;
+import org.opencv.core.Size;
+import org.opencv.core.Scalar;
+import org.opencv.core.CvType;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.core.Core;
@@ -15,9 +20,13 @@ import org.opencv.core.Core;
 public class ImageReader {
 
     static {
+//        System.out.println("Core version: " + Core.NATIVE_LIBRARY_NAME);
+//        System.out.println(System.getProperty("java.library.path"));
+//        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+
         System.out.println("Core version: " + Core.NATIVE_LIBRARY_NAME);
-        System.out.println(System.getProperty("java.library.path"));
-        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
+        OpenCV.loadLocally();
+//        System.loadLibrary(Core.NATIVE_LIBRARY_NAME);
     }
 
 
