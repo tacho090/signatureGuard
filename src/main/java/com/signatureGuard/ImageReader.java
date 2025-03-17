@@ -9,7 +9,7 @@ import static org.bytedeco.opencv.global.opencv_imgcodecs.imread;
 
 public class ImageReader {
 
-    @org.jetbrains.annotations.Nullable
+//    @org.jetbrains.annotations.Nullable
     public static Mat imageReader(String imagePath) {
         Mat srcImage = imread(imagePath, 1);
         try {

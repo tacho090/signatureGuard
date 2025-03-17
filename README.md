@@ -26,3 +26,10 @@ Add the following block to the Main.java program so that it may load the library
     }
 ```
 
+*Unable to find Class*
+
+```commandline
+mvn clean compile
+mvn exec:java -Dexec.mainClass=com.signatureGuard.OpenCVTest
+```
+

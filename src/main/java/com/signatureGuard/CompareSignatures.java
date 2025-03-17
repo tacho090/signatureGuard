@@ -47,10 +47,11 @@ public class CompareSignatures {
 
         // Output the sum of elements
         System.out.println("Sum of differences: " + sumDiff);
-        double difference = sumDiff.val[0] / (img1.rows() * img1.cols());
-
-        System.out.println("Return a similarity score between 0 and 1");
-        return 1 - (difference / 255.0);
+//        double difference = sumDiff.val[0] / (img1.rows() * img1.cols());
+//
+//        System.out.println("Return a similarity score between 0 and 1");
+//        return 1 - (difference / 255.0);
+        return 0d;
     }
 
     private Mat convertToGrayScale(String signature) {

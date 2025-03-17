@@ -28,6 +28,11 @@
             <version>RELEASE</version>
             <scope>compile</scope>
         </dependency>
+        <dependency>
+            <groupId>org.bytedeco</groupId>
+            <artifactId>openblas-platform</artifactId>
+            <version>0.3.28-1.5.11</version>
+        </dependency>
         <!--        <dependency>-->
 <!--            <groupId>org.openpnp</groupId>-->
 <!--            <artifactId>opencv</artifactId>-->
