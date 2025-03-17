@@ -17,16 +17,22 @@
     </properties>
 
     <dependencies>
-<!--        <dependency>-->
-<!--            <groupId>org.bytedeco</groupId>-->
-<!--            <artifactId>opencv</artifactId>-->
-<!--            <version>4.10.0-1.5.11</version>-->
-<!--        </dependency>-->
         <dependency>
-            <groupId>org.openpnp</groupId>
+            <groupId>org.bytedeco</groupId>
             <artifactId>opencv</artifactId>
-            <version>4.9.0-0</version>
+            <version>4.10.0-1.5.11</version>
         </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>RELEASE</version>
+            <scope>compile</scope>
+        </dependency>
+        <!--        <dependency>-->
+<!--            <groupId>org.openpnp</groupId>-->
+<!--            <artifactId>opencv</artifactId>-->
+<!--            <version>4.9.0-0</version>-->
+<!--        </dependency>-->
     </dependencies>
 
 
