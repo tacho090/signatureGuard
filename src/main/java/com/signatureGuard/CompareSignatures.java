@@ -6,10 +6,15 @@ import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.imgcodecs.Imgcodecs;
 import org.opencv.imgproc.Imgproc;
+import static org.bytedeco.opencv.global.opencv_imgcodecs.imread;
+import static org.bytedeco.opencv.global.opencv_imgproc.Canny;
+import static org.bytedeco.opencv.global.opencv_imgproc.GaussianBlur;
+import org.bytedeco.opencv.global.opencv_core;
 
-import static com.signatureGuard.Main.KERNEL_SIZE;
 
 public class CompareSignatures {
+
+    private static final int KERNEL_SIZE = 3;
 
     public double compareSignatures(String signatureA, String signatureB) {
         System.out.println("Loading images as grayscale");
@@ -20,22 +25,28 @@ public class CompareSignatures {
         validateImages("size", img1, img2);
 
         System.out.println("Apply Gaussian Blur to smooth edges");
-        applyGaussianBlur(img1, img1, new Size(5, 5));
-        applyGaussianBlur(img2, img2, new Size(5, 5));
+        org.bytedeco.opencv.opencv_core.Size gaussianBlurKernelSize =
+                new org.bytedeco.opencv.opencv_core.Size(5, 5);
+        applyGaussianBlur(img1, img1, gaussianBlurKernelSize);
+        applyGaussianBlur(img2, img2, gaussianBlurKernelSize);
 
         System.out.println("Use Edge detection with Canny algorithm");
-        applyCannyEdgeDetection(img1, img1, 50, 150, KERNEL_SIZE);
-        applyCannyEdgeDetection(img2, img2, 50, 150, KERNEL_SIZE,  false);
+        applyCannyEdgeDetection(img1, img1);
+        applyCannyEdgeDetection(img2, img2);
 
         System.out.println("Compute Absolute Difference");
         Mat diff = new Mat();
-        Core.absdiff(img1, img2, diff);
+
+        opencv_core.absdiff(img1, img2, diff);
 
         System.out.println("Difference Image Size: " + diff.size());
         System.out.println("Difference Image Type: " + diff.type());
 
-        System.out.println("Calculate the difference score");
-        Scalar sumDiff = Core.sumElems(diff);
+        System.out.println("Calculate the difference score of all elements in the diff image");
+        org.bytedeco.opencv.opencv_core.Scalar sumDiff = opencv_core.sumElems(diff);
+
+        // Output the sum of elements
+        System.out.println("Sum of differences: " + sumDiff);
         double difference = sumDiff.val[0] / (img1.rows() * img1.cols());
 
         System.out.println("Return a similarity score between 0 and 1");
@@ -43,32 +54,33 @@ public class CompareSignatures {
     }
 
     private Mat convertToGrayScale(String signature) {
-        return Imgcodecs.imread(signature, Imgproc.COLOR_BGR2GRAY);
+        return imread(signature, 0);
     }
 
     private void applyGaussianBlur(
             Mat sourceImage,
             Mat destinyImage,
-            Size kernel
+            org.bytedeco.opencv.opencv_core.Size kernel
     ) {
-        Imgproc.GaussianBlur(
-                sourceImage,
-                destinyImage,
-                new Size(kernel.width, kernel.height),
-                0
+        GaussianBlur(
+            sourceImage,
+            destinyImage,
+            kernel,
+            0,
+            0,
+            0
         );
     }
 
     private void applyCannyEdgeDetection(
             Mat sourceImage,
-            Mat destinyImage,
-            Size kernel
+            Mat destinyImage
     ) {
-        Imgproc.Canny(
+        Canny(
                 sourceImage,
                 destinyImage,
-                new Size(kernel.width, kernel.height),
-                false
+                50d,
+                150d
         );
     }
 
