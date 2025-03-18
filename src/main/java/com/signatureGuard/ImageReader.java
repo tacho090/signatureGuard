@@ -1,15 +1,11 @@
 package com.signatureGuard;
 
 import org.bytedeco.opencv.opencv_core.Mat;
-
-import java.awt.image.BufferedImage;
-
 import static org.bytedeco.opencv.global.opencv_imgcodecs.imread;
 
 
 public class ImageReader {
 
-//    @org.jetbrains.annotations.Nullable
     public static Mat imageReader(String imagePath) {
         Mat srcImage = imread(imagePath, 1);
         try {

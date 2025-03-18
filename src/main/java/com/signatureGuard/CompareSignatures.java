@@ -1,11 +1,6 @@
 package com.signatureGuard;
 
-import org.opencv.core.Core;
 import org.bytedeco.opencv.opencv_core.Mat;
-import org.opencv.core.Scalar;
-import org.opencv.core.Size;
-import org.opencv.imgcodecs.Imgcodecs;
-import org.opencv.imgproc.Imgproc;
 import static org.bytedeco.opencv.global.opencv_imgcodecs.imread;
 import static org.bytedeco.opencv.global.opencv_imgproc.Canny;
 import static org.bytedeco.opencv.global.opencv_imgproc.GaussianBlur;
