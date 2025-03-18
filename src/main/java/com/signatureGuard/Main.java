@@ -7,7 +7,7 @@ public class Main {
 
     public static void main(String[] args) {
         String signatureAPath = "firmas/firma1.png";
-        String signatureBPath = "firmas/firma1.png";
+        String signatureBPath = "firmas/firma2.png";
         final Mat sourceSignatureA =
                 ImageReader.imageReader(signatureAPath);
         final Mat sourceSignatureB =

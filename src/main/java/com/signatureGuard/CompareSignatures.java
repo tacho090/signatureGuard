@@ -16,8 +16,12 @@ public class CompareSignatures {
         Mat img1 = convertToGrayScale(signatureA);
         Mat img2 = convertToGrayScale(signatureB);
 
-        validateImages("loadImages", img1, img2);
-        validateImages("size", img1, img2);
+        validateImages(img1, img2);
+
+        if(!ResizeImage.areSameSize(img1, img2)) {
+            System.out.println("Images have different sizes! Resizing...");
+            ResizeImage.resizeImage(img1, img2);
+        }
 
         System.out.println("Apply Gaussian Blur to smooth edges");
         org.bytedeco.opencv.opencv_core.Size gaussianBlurKernelSize =
@@ -80,27 +84,10 @@ public class CompareSignatures {
         );
     }
 
-    private void validateImages(String condition, Mat img1, Mat img2) {
-        switch (condition) {
-            case "loadImages":
-                if (img1.empty() || img2.empty()) {
-                    System.err.println("Error: One or both images could not be loaded.");
-                    System.exit(-1);
-                }
-                break;
-
-            case "size":
-                System.out.println("Ensure both images are the same size");
-                System.out.println("Image 1 Size: " + img1.size());
-                System.out.println("Image 2 Size: " + img2.size());
-                System.out.println("Image 1 Type: " + img1.type());
-                System.out.println("Image 2 Type: " + img2.type());
-                if (!img1.size().equals(img2.size())) {
-                    System.err.println("Error: Images have different sizes!");
-                    System.exit(-1);
-                }
-                break;
-
+    private void validateImages(Mat img1, Mat img2) {
+        if (img1.empty() || img2.empty()) {
+            System.err.println("Error: One or both images could not be loaded.");
+            System.exit(-1);
         }
     }
 }
