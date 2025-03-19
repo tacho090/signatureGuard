@@ -6,8 +6,8 @@ import org.bytedeco.opencv.opencv_core.Mat;
 public class Main {
 
     public static void main(String[] args) {
-        String signatureAPath = "firmas/firma1.png";
-        String signatureBPath = "firmas/firma2.png";
+        String signatureAPath = "firmas/firma3.png";
+        String signatureBPath = "firmas/firma3.png";
         final Mat sourceSignatureA =
                 ImageReader.imageReader(signatureAPath);
         final Mat sourceSignatureB =
@@ -15,11 +15,11 @@ public class Main {
 
         CompareSignatures compareSignatures = new CompareSignatures();
         if (sourceSignatureA != null && sourceSignatureB != null) {
-            double signatureSimilarity = compareSignatures
+            String signatureSimilarity = compareSignatures
                     .compareSignatures(signatureAPath, signatureBPath);
             System.out.println(
                     "The similarity between the signatures is: "
-                            + (signatureSimilarity * 100) + "%");
+                            + signatureSimilarity + "%");
         } else {
             System.out.println("Error loading images.");
         }
