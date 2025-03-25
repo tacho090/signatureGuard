@@ -6,8 +6,8 @@ import org.bytedeco.opencv.opencv_core.Mat;
 public class Main {
 
     public static void main(String[] args) {
-        String signatureAPath = "firmas/firma3.png";
-        String signatureBPath = "firmas/firma3.png";
+        String signatureAPath = "firmas/firma1.png";
+        String signatureBPath = "firmas/firma2.png";
         final Mat sourceSignatureA =
                 ImageReader.imageReader(signatureAPath);
         final Mat sourceSignatureB =
