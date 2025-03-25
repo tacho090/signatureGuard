@@ -18,22 +18,28 @@ public class ResizeImage {
             Mat image1, Mat image2) {
         List<Mat> images = Arrays.asList(image1, image2);
         images.forEach(ResizeImage::displaySize);
+        CompareSignatures.saveImageToDisk(image1, "Saved sourceSignatureA", "sourceSignatureA");
+        CompareSignatures.saveImageToDisk(image2, "Saved sourceSignatureB", "sourceSignatureB");
+
         return image1.size().width() == image2.size().width() &&
                 image1.size().height() == image2.size().height();
     }
 
-    public static void resizeImage(
+    public static Mat resizeImage(
             Mat correctlySizedImage,
             Mat imageToBeResized
     ){
-        Mat resizedImg = new Mat();
+        Mat resizedImage = new Mat();
         opencv_imgproc.resize(
-                correctlySizedImage,
                 imageToBeResized,
+                resizedImage,
                 correctlySizedImage.size());
+        CompareSignatures.saveImageToDisk(correctlySizedImage, "Correctly sized image", "correctlySizedImage");
+        CompareSignatures.saveImageToDisk(resizedImage, "Resized image", "resizedImage");
         System.out.println("New image sizes:");
         List<Mat> images = Arrays.asList(
                 correctlySizedImage, imageToBeResized);
         images.forEach(ResizeImage::displaySize);
+        return resizedImage;
     }
 }

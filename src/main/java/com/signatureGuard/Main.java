@@ -15,11 +15,11 @@ public class Main {
 
         CompareSignatures compareSignatures = new CompareSignatures();
         if (sourceSignatureA != null && sourceSignatureB != null) {
-            double signatureSimilarity = compareSignatures
+            String signatureSimilarity = compareSignatures
                     .compareSignatures(signatureAPath, signatureBPath);
             System.out.println(
                     "The similarity between the signatures is: "
-                            + (signatureSimilarity * 100) + "%");
+                            + signatureSimilarity + "%");
         } else {
             System.out.println("Error loading images.");
         }
