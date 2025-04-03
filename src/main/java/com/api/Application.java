@@ -1,14 +1,14 @@
-package com.example;
+package com.api;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
-@SpringBootApplication
-public class DemoApplication {
+@SpringBootApplication(scanBasePackages = {"com.api", "com.signatureGuard"})
+public class Application {
 
     public static void main(String[] args) {
 
-        SpringApplication.run(DemoApplication.class, args);
+        SpringApplication.run(Application.class, args);
     }
 
 }

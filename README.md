@@ -33,3 +33,7 @@ mvn clean compile
 mvn exec:java -Dexec.mainClass=com.signatureGuard.OpenCVTest
 ```
 
+*Run Server*
+
+``mvn spring-boot:``
+

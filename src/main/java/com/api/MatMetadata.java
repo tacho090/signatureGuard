@@ -1,4 +1,4 @@
-package com.example;
+package com.api;
 
 import org.bytedeco.opencv.opencv_core.Mat;
 
