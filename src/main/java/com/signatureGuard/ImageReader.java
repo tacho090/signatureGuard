@@ -17,10 +17,6 @@ public class ImageReader {
         } catch(Exception e) {
             System.out.println("Exception logged " + e);
             return null;
-        } finally {
-            if (srcImage != null) {
-                srcImage.release();
-            }
         }
         return srcImage;
     }
