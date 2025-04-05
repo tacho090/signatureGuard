@@ -1,5 +1,6 @@
 package com.signatureGuard;
 
+import org.bytedeco.opencv.global.opencv_imgproc;
 import org.bytedeco.opencv.opencv_core.Mat;
 
 import static org.bytedeco.opencv.global.opencv_core.CV_8UC1;
@@ -22,10 +23,10 @@ public class CompareSignatures {
     private static final int KERNEL_SIZE = 3;
     private static final String imageDebugDir = "images_debug";
 
-    public String compareSignatures(String signatureA, String signatureB) {
+    public String compareSignatures(Mat signatureA, Mat signatureB) {
         System.out.println("Loading images as grayscale");
-        System.out.println("Signature locations: " + signatureA);
-        System.out.println("Signature locations: " + signatureB);
+
+        validateImages(signatureA, signatureB);
 
         Mat img1 = convertToGrayScale(signatureA, "firstImageGrayscale");
         Mat img2 = convertToGrayScale(signatureB, "secondImageGrayscale");
@@ -95,11 +96,11 @@ public class CompareSignatures {
         return df.format(similarityPercentage);
     }
 
-    private Mat convertToGrayScale(String signature, String identifier) {
-        Mat grayscaleImage = imread(signature, IMREAD_GRAYSCALE);
-        System.out.println("Image channels: " + grayscaleImage.channels()); // Should print 1
-        saveImageToDisk(grayscaleImage, "Saving grayscale image " + signature, "grayscale_" + identifier);
-        return grayscaleImage;
+    private Mat convertToGrayScale(Mat signatureImage, String identifier) {
+        Mat grayScaleImage = new Mat();
+        opencv_imgproc.cvtColor(signatureImage, grayScaleImage, opencv_imgproc.COLOR_BGR2GRAY);
+        saveImageToDisk(grayScaleImage, "Saving grayscale image ", "grayscale_" + identifier);
+        return grayScaleImage;
     }
 
     private void applyGaussianBlur(
@@ -132,7 +133,7 @@ public class CompareSignatures {
     private void validateImages(Mat img1, Mat img2) {
         if (img1.empty() || img2.empty()) {
             System.err.println("Error: One or both images could not be loaded.");
-            System.exit(-1);
+            throw new RuntimeException("Error: images are either empty or null. Cannot process image.");
         }
     }
 
