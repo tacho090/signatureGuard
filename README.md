@@ -37,3 +37,5 @@ mvn exec:java -Dexec.mainClass=com.signatureGuard.OpenCVTest
 
 ``mvn spring-boot:``
 
+Pending:     "message": "Error: images are either empty or null. Cannot process image.",
+
