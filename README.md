@@ -6,7 +6,7 @@
 
 Export JAVA_HOME to an appropriate Java SDK
 ```
-export JAVA_HOME=/home/pablo/.jdks/openjdk-23.0.2
+export JAVA_HOME=/home/pablo/.jdks/openjdk-21.0.2
 ```
 
 *OpenCV documentation*
@@ -39,3 +39,24 @@ mvn exec:java -Dexec.mainClass=com.signatureGuard.OpenCVTest
 
 Pending:     "message": "Error: images are either empty or null. Cannot process image.",
 
+Steps to run this in a new computer:
+
+1. Add these two variables to the bashrc
+```shell
+export JAVA_HOME=/usr/lib/jvm/java-21-openjdk-amd64
+export PATH=$JAVA_HOME:$PATH
+
+```
+2. java -version
+3. mvn -version
+4. These two above have to return something
+5. Install java compiler with
+
+```shell
+sudo apt install openjdk-21-jdk
+```
+6. mvn clean compile
+7. mvn spring-boot:run
+
+
+2. 
