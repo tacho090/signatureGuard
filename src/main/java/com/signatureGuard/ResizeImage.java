@@ -1,5 +1,6 @@
 package com.signatureGuard;
 
+import com.siameseNetwork.SiameseSigNetCompare;
 import org.bytedeco.opencv.global.opencv_imgproc;
 import org.bytedeco.opencv.opencv_core.Mat;
 import org.bytedeco.opencv.opencv_core.Size;
@@ -19,15 +20,14 @@ public class ResizeImage {
             Mat image1, Mat image2) {
         List<Mat> images = Arrays.asList(image1, image2);
         images.forEach(ResizeImage::displaySize);
-        CompareSignatures.saveImageToDisk(image1, "Saved sourceSignatureA", "sourceSignatureA");
-        CompareSignatures.saveImageToDisk(image2, "Saved sourceSignatureB", "sourceSignatureB");
+        SiameseSigNetCompare.saveImageToDisk(image1, "Saved sourceSignatureA", "sourceSignatureA");
+        SiameseSigNetCompare.saveImageToDisk(image2, "Saved sourceSignatureB", "sourceSignatureB");
 
         return image1.size().width() == image2.size().width() &&
                 image1.size().height() == image2.size().height();
     }
 
     public static Mat resizeImage(
-            Mat correctlySizedImage,
             Mat imageToBeResized
     ){
         Mat resizedImage = new Mat();
@@ -35,12 +35,7 @@ public class ResizeImage {
                 imageToBeResized,
                 resizedImage,
                 new Size(128, 128));
-        CompareSignatures.saveImageToDisk(correctlySizedImage, "Correctly sized image", "correctlySizedImage");
-        CompareSignatures.saveImageToDisk(resizedImage, "Resized image", "resizedImage");
-        System.out.println("New image sizes:");
-        List<Mat> images = Arrays.asList(
-                correctlySizedImage, imageToBeResized);
-        images.forEach(ResizeImage::displaySize);
+        SiameseSigNetCompare.saveImageToDisk(resizedImage, "Resized image", "resizedImage");
         return resizedImage;
     }
 }
