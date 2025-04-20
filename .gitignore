@@ -40,3 +40,6 @@ build/
 ### Test Resources ###
 firmas
 images_debug
+
+### Project Resources ###
+src/main/resources
