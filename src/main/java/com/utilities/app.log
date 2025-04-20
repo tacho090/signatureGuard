@@ -1,1 +1,17 @@
 2025-04-20 06:51:23 INFO    [com.siameseNetwork.SiameseSigNetCompare] Loading images as grayscale 
+2025-04-20 09:12:03 INFO    [com.siameseNetwork.SiameseSigNetCompare] Loading images as grayscale 
+2025-04-20 09:14:03 INFO    [com.siameseNetwork.SiameseSigNetCompare] Loading images as grayscale 
+2025-04-20 09:16:12 INFO    [com.siameseNetwork.SiameseSigNetCompare] Loading images as grayscale 
+2025-04-20 09:26:33 INFO    [com.siameseNetwork.SiameseSigNetCompare] Loading images as grayscale 
+2025-04-20 09:31:19 INFO    [com.siameseNetwork.SiameseSigNetCompare] Loading images as grayscale 
+2025-04-20 09:49:49 INFO    [com.siameseNetwork.SiameseSigNetCompare] Loading images as grayscale 
+2025-04-20 09:49:49 SEVERE  [org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/].[dispatcherServlet]] Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.ClassCastException: class org.bytedeco.javacpp.indexer.FloatRawIndexer cannot be cast to class org.bytedeco.javacpp.indexer.UByteIndexer (org.bytedeco.javacpp.indexer.FloatRawIndexer and org.bytedeco.javacpp.indexer.UByteIndexer are in unnamed module of loader 'app')] with root cause 
+2025-04-20 10:02:00 INFO    [org.apache.catalina.core.StandardService] Stopping service [Tomcat] 
+2025-04-20 10:02:00 INFO    [org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]] Destroying Spring FrameworkServlet 'dispatcherServlet' 
+2025-04-20 10:02:01 INFO    [org.apache.catalina.core.StandardService] Starting service [Tomcat] 
+2025-04-20 10:02:01 INFO    [org.apache.catalina.core.StandardEngine] Starting Servlet engine: [Apache Tomcat/10.1.39] 
+2025-04-20 10:02:01 INFO    [org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]] Initializing Spring embedded WebApplicationContext 
+2025-04-20 10:02:04 INFO    [org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/]] Initializing Spring DispatcherServlet 'dispatcherServlet' 
+2025-04-20 10:03:02 INFO    [com.siameseNetwork.SiameseSigNetCompare] Loading images as grayscale 
+2025-04-20 10:04:30 INFO    [com.siameseNetwork.SiameseSigNetCompare] Loading images as grayscale 
+2025-04-20 10:05:46 INFO    [com.siameseNetwork.SiameseSigNetCompare] Loading images as grayscale 

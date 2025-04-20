@@ -5,6 +5,9 @@ import ai.onnxruntime.OrtException;
 import ai.onnxruntime.OrtSession;
 import com.signatureGuard.ResizeImage;
 import com.utilities.AppLogger;
+import org.bytedeco.javacpp.indexer.UByteIndexer;
+import org.bytedeco.javacpp.indexer.FloatIndexer;
+import org.bytedeco.javacpp.indexer.Indexer;
 import org.bytedeco.opencv.global.opencv_core;
 import org.bytedeco.opencv.global.opencv_imgproc;
 import org.bytedeco.opencv.opencv_core.Mat;
@@ -22,8 +25,8 @@ import java.util.logging.Logger;
 import static org.bytedeco.opencv.global.opencv_core.CV_8UC1;
 import static org.bytedeco.opencv.global.opencv_core.absdiff;
 import static org.bytedeco.opencv.global.opencv_imgcodecs.imwrite;
-import static org.bytedeco.opencv.global.opencv_imgproc.Canny;
-import static org.bytedeco.opencv.global.opencv_imgproc.GaussianBlur;
+import static org.bytedeco.opencv.global.opencv_imgproc.*;
+
 import com.siameseNetwork.OnnxModelVerifier;
 
 
@@ -50,18 +53,44 @@ public class SiameseSigNetCompare {
             validateImages(img1, img2);
 
             Mat resizedImage1 = ResizeImage.resizeImage(img1);
-            Mat resizedImage2 = ResizeImage.resizeImage(img1);
+            Mat resizedImage2 = ResizeImage.resizeImage(img2);
 
             resizedImage1.convertTo(resizedImage1, CvType.CV_32F);
             resizedImage2.convertTo(resizedImage2, CvType.CV_32F);
 
-            // 4. Flatten channel‑first into a Java float array
-            int channel = 1;
-            int rowsImage1 = resizedImage1.rows(), colsImage1 = resizedImage1.cols();
-            float[] inputTensorA = new float[channel * rowsImage1 * colsImage1];
+            SiameseSigNetCompare.saveImageToDisk(
+                    resizedImage1, "Save Resized image 1", "resizedImage1");
+            SiameseSigNetCompare.saveImageToDisk(
+                    resizedImage2, "Save Resized image 2", "resizedImage2");
 
-            int rowsImage2 = resizedImage2.rows(), colsImage2 = resizedImage2.cols();
-            float[] inputTensorB = new float[channel * rowsImage2 * colsImage2];
+
+            int rows1 = resizedImage1.rows(), cols1 = resizedImage1.cols();
+            int rows2 = resizedImage2.rows(), cols2 = resizedImage2.cols();
+            float[] inputTensorA = new float[rows1 * cols1];
+            float[] inputTensorB = new float[rows2 * cols2];
+
+            FloatIndexer fidx1 = resizedImage1.createIndexer();
+            int flatIdx = 0;
+            for (int y = 0; y < rows1; y++) {
+                for (int x = 0; x < cols1; x++) {
+                    inputTensorA[flatIdx++] = fidx1.get(y, x);
+                }
+            }
+            fidx1.release();
+
+            FloatIndexer fidx2 = resizedImage2.createIndexer();
+            int flatIdx2 = 0;
+            for (int y = 0; y < rows2; y++) {
+                for (int x = 0; x < cols2; x++) {
+                    inputTensorB[flatIdx2++] = fidx2.get(y, x);
+                }
+            }
+            fidx2.release();
+
+
+            boolean identical = Arrays.equals(inputTensorA, inputTensorB);
+            double distance = euclideanDistance(inputTensorA, inputTensorB);
+            boolean similar = almostEqual(inputTensorA, inputTensorB, 1e-3f);
 
             OnnxModelVerifier onnxVerifier = new OnnxModelVerifier();
             float[][] embeddings = onnxVerifier.getEmbeddings(inputTensorA, inputTensorB);
@@ -73,8 +102,8 @@ public class SiameseSigNetCompare {
             System.out.println("Embedding B (first 5 vals): " +
                     Arrays.toString(Arrays.copyOf(embeddings[1], newLength)));
 
-            double distance = euclideanDistance(embeddings[0], embeddings[1]);
-            System.out.printf("Distance between signatures: %.4f\n", distance);
+            double euclideanDistance = euclideanDistance(embeddings[0], embeddings[1]);
+            System.out.printf("Distance between signatures: %.4f\n", euclideanDistance);
 
             if (distance < THRESHOLD) {
                 return "✔️ Signatures match";
@@ -85,6 +114,14 @@ public class SiameseSigNetCompare {
             e.printStackTrace();
             return "There was an error";
         }
+    }
+
+    public static boolean almostEqual(float[] a, float[] b, float tol) {
+        if (a.length != b.length) return false;
+        for (int i = 0; i < a.length; i++) {
+            if (Math.abs(a[i] - b[i]) > tol) return false;
+        }
+        return true;
     }
 
     /**

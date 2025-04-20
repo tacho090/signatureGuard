@@ -35,7 +35,6 @@ public class ResizeImage {
                 imageToBeResized,
                 resizedImage,
                 new Size(128, 128));
-        SiameseSigNetCompare.saveImageToDisk(resizedImage, "Resized image", "resizedImage");
         return resizedImage;
     }
 }
