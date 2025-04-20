@@ -31,14 +31,17 @@ public class ResizeImage {
     ){
         Mat resizedImage = new Mat();
         opencv_imgproc.resize(
+                //the input Mat containing the pixels you want to scale
                 imageToBeResized,
+//              // the output Mat that will be filled with the desired result
                 resizedImage,
+                // a size object taken from some other image whose dimensiones you want to match
                 correctlySizedImage.size());
         CompareSignatures.saveImageToDisk(correctlySizedImage, "Correctly sized image", "correctlySizedImage");
         CompareSignatures.saveImageToDisk(resizedImage, "Resized image", "resizedImage");
         System.out.println("New image sizes:");
         List<Mat> images = Arrays.asList(
-                correctlySizedImage, imageToBeResized);
+                correctlySizedImage, resizedImage);
         images.forEach(ResizeImage::displaySize);
         return resizedImage;
     }
