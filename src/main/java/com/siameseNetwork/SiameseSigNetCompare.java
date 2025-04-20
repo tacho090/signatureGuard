@@ -4,17 +4,20 @@ import ai.onnxruntime.OnnxTensor;
 import ai.onnxruntime.OrtException;
 import ai.onnxruntime.OrtSession;
 import com.signatureGuard.ResizeImage;
+import com.utilities.AppLogger;
 import org.bytedeco.opencv.global.opencv_core;
 import org.bytedeco.opencv.global.opencv_imgproc;
 import org.bytedeco.opencv.opencv_core.Mat;
 import org.bytedeco.opencv.opencv_core.Scalar;
 import org.bytedeco.opencv.opencv_core.Size;
 import org.opencv.core.CvType;
+import java.util.Arrays;
 
 import java.nio.FloatBuffer;
 import java.text.DecimalFormat;
 import java.util.List;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import static org.bytedeco.opencv.global.opencv_core.CV_8UC1;
 import static org.bytedeco.opencv.global.opencv_core.absdiff;
@@ -29,8 +32,7 @@ public class SiameseSigNetCompare {
     private static final int KERNEL_SIZE = 3;
     private static final String imageDebugDir = "images_debug";
     private static final double THRESHOLD = 0.5;
-
-
+    private static final Logger log = AppLogger.getLogger(SiameseSigNetCompare.class);
 
 
     public String compareSignatures(
@@ -38,8 +40,7 @@ public class SiameseSigNetCompare {
             Mat signatureB
     ) {
         try {
-            OnnxModelVerifier onnxVerifier = new OnnxModelVerifier();
-            System.out.println("Loading images as grayscale");
+            log.info("Loading images as grayscale");
 
             validateImages(signatureA, signatureB);
 
@@ -62,7 +63,15 @@ public class SiameseSigNetCompare {
             int rowsImage2 = resizedImage2.rows(), colsImage2 = resizedImage2.cols();
             float[] inputTensorB = new float[channel * rowsImage2 * colsImage2];
 
+            OnnxModelVerifier onnxVerifier = new OnnxModelVerifier();
             float[][] embeddings = onnxVerifier.getEmbeddings(inputTensorA, inputTensorB);
+
+            // DEBUG: print first few values of each embedding to inspect differences
+            int newLength = 128;
+            System.out.println("Embedding A (first 5 vals): " +
+                    Arrays.toString(Arrays.copyOf(embeddings[0], newLength)));
+            System.out.println("Embedding B (first 5 vals): " +
+                    Arrays.toString(Arrays.copyOf(embeddings[1], newLength)));
 
             double distance = euclideanDistance(embeddings[0], embeddings[1]);
             System.out.printf("Distance between signatures: %.4f\n", distance);
