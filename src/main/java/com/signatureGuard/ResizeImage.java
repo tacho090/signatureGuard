@@ -2,6 +2,7 @@ package com.signatureGuard;
 
 import org.bytedeco.opencv.global.opencv_imgproc;
 import org.bytedeco.opencv.opencv_core.Mat;
+import org.bytedeco.opencv.opencv_core.Size;
 
 import java.util.Arrays;
 import java.util.List;
@@ -33,7 +34,7 @@ public class ResizeImage {
         opencv_imgproc.resize(
                 imageToBeResized,
                 resizedImage,
-                correctlySizedImage.size());
+                new Size(128, 128));
         CompareSignatures.saveImageToDisk(correctlySizedImage, "Correctly sized image", "correctlySizedImage");
         CompareSignatures.saveImageToDisk(resizedImage, "Resized image", "resizedImage");
         System.out.println("New image sizes:");

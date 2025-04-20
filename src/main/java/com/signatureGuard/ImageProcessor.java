@@ -1,6 +1,7 @@
 package com.signatureGuard;
 
 import com.api.ImageStorageService;
+import com.siameseNetwork.SiameseSigNetCompare;
 import org.bytedeco.opencv.opencv_core.Mat;
 import org.springframework.stereotype.Service;
 
@@ -18,7 +19,7 @@ public class ImageProcessor {
         final Mat sourceSignatureA = imageStorageService.getImage("signatureA");
         final Mat sourceSignatureB = imageStorageService.getImage("signatureB");
 
-        CompareSignatures compareSignatures = new CompareSignatures();
+        SiameseSigNetCompare compareSignatures = new SiameseSigNetCompare();
         if (sourceSignatureA != null && sourceSignatureB != null) {
             String signatureSimilarity = compareSignatures
                     .compareSignatures(sourceSignatureA, sourceSignatureB);
@@ -29,6 +30,18 @@ public class ImageProcessor {
         } else {
             return "Error loading images.";
         }
+
+//        CompareSignatures compareSignatures = new CompareSignatures();
+//        if (sourceSignatureA != null && sourceSignatureB != null) {
+//            String signatureSimilarity = compareSignatures
+//                    .compareSignatures(sourceSignatureA, sourceSignatureB);
+//            return
+//                    "The similarity between the signatures is: "
+//                            + signatureSimilarity + "%";
+//
+//        } else {
+//            return "Error loading images.";
+//        }
     }
 
 }
