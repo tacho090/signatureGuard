@@ -10,8 +10,8 @@ import java.util.Map;
 
 public class OnnxModelVerifier {
 
-    private static OrtEnvironment env = null;
-    private static OrtSession session = null;
+    private final OrtEnvironment env ;
+    private final OrtSession session;
 
     public OnnxModelVerifier() throws OrtException {
         // Create the runtime environment
@@ -21,7 +21,7 @@ public class OnnxModelVerifier {
         session = env.createSession(onnxModelPath, new OrtSession.SessionOptions());
     }
 
-    public static float[][] getEmbeddings(float[] inputA, float[] inputB) throws OrtException {
+    public float[][] getEmbeddings(float[] inputA, float[] inputB) throws OrtException {
         // Prepare ONNX tensors with shape [1,1,128,128]
         OnnxTensor tensorA = OnnxTensor.createTensor(env, FloatBuffer.wrap(inputA), new long[]{1, 1, 128, 128});
         OnnxTensor tensorB = OnnxTensor.createTensor(env, FloatBuffer.wrap(inputB), new long[]{1, 1, 128, 128});

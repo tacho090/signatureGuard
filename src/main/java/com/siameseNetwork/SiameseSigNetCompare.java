@@ -38,6 +38,7 @@ public class SiameseSigNetCompare {
             Mat signatureB
     ) {
         try {
+            OnnxModelVerifier onnxVerifier = new OnnxModelVerifier();
             System.out.println("Loading images as grayscale");
 
             validateImages(signatureA, signatureB);
@@ -50,15 +51,6 @@ public class SiameseSigNetCompare {
             Mat resizedImage1 = ResizeImage.resizeImage(img1);
             Mat resizedImage2 = ResizeImage.resizeImage(img1);
 
-
-            System.out.println("Apply Gaussian Blur to smooth edges");
-            Size gaussianBlurKernelSize =
-                    new Size(5, 5);
-            applyGaussianBlur(resizedImage1, resizedImage1, gaussianBlurKernelSize);
-            applyGaussianBlur(resizedImage2, resizedImage2, gaussianBlurKernelSize);
-            saveImageToDisk(img1, "Gaussian Blur " + signatureA, "gaussianA");
-            saveImageToDisk(img2, "Gaussian Blur " + signatureB, "gaussianB");
-
             resizedImage1.convertTo(resizedImage1, CvType.CV_32F);
             resizedImage2.convertTo(resizedImage2, CvType.CV_32F);
 
@@ -70,7 +62,7 @@ public class SiameseSigNetCompare {
             int rowsImage2 = resizedImage2.rows(), colsImage2 = resizedImage2.cols();
             float[] inputTensorB = new float[channel * rowsImage2 * colsImage2];
 
-            float[][] embeddings = OnnxModelVerifier.getEmbeddings(inputTensorA, inputTensorB);
+            float[][] embeddings = onnxVerifier.getEmbeddings(inputTensorA, inputTensorB);
 
             double distance = euclideanDistance(embeddings[0], embeddings[1]);
             System.out.printf("Distance between signatures: %.4f\n", distance);
@@ -103,21 +95,6 @@ public class SiameseSigNetCompare {
         opencv_imgproc.cvtColor(signatureImage, grayScaleImage, opencv_imgproc.COLOR_BGR2GRAY);
         saveImageToDisk(grayScaleImage, "Saving grayscale image ", "grayscale_" + identifier);
         return grayScaleImage;
-    }
-
-    private void applyGaussianBlur(
-            Mat sourceImage,
-            Mat destinyImage,
-            Size kernel
-    ) {
-        GaussianBlur(
-            sourceImage,
-            destinyImage,
-            kernel,
-            0,
-            0,
-            0
-        );
     }
 
     private void validateImages(Mat img1, Mat img2) {
