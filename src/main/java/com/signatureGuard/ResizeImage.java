@@ -22,17 +22,16 @@ public class ResizeImage {
     OnnxModelVerifier onnxVerifier = new OnnxModelVerifier(onnxPath);
 
     private static void displaySize(Mat image) {
-        log.info("Load onnx model configuration");
-
-        System.out.printf(
+        log.info(String.format(
                 "Image 1 Size (height x width):  %d x %d%n",
-                image.size().height(), image.size().width());
+                image.size().height(), image.size().width()
+        ));
     }
 
     public static Boolean areSameSize(
             Mat image1, Mat image2) {
         List<Mat> images = Arrays.asList(image1, image2);
-        images.forEach(ResizeImage::displaySize);
+        images.forEach(img -> ResizeImage.displaySize(img, myLabel));
         SiameseSigNetCompare.saveImageToDisk(image1, "Saved sourceSignatureA", "sourceSignatureA");
         SiameseSigNetCompare.saveImageToDisk(image2, "Saved sourceSignatureB", "sourceSignatureB");
 
