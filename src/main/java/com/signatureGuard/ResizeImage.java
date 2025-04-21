@@ -1,16 +1,29 @@
 package com.signatureGuard;
 
+import com.siameseNetwork.OnnxConfig;
+import com.siameseNetwork.OnnxModelVerifier;
 import com.siameseNetwork.SiameseSigNetCompare;
+import com.utilities.AppLogger;
 import org.bytedeco.opencv.global.opencv_imgproc;
 import org.bytedeco.opencv.opencv_core.Mat;
 import org.bytedeco.opencv.opencv_core.Size;
 
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 
 public class ResizeImage {
 
+    private static final Logger log =
+            AppLogger.getLogger(SiameseSigNetCompare.class);
+    OnnxConfig cfg = new OnnxConfig();
+    String inputChannels = cfg.inputChannels();
+    int THRESHOLD = cfg.getOnnxModelThreshold();
+    OnnxModelVerifier onnxVerifier = new OnnxModelVerifier(onnxPath);
+
     private static void displaySize(Mat image) {
+        log.info("Load onnx model configuration");
+
         System.out.printf(
                 "Image 1 Size (height x width):  %d x %d%n",
                 image.size().height(), image.size().width());

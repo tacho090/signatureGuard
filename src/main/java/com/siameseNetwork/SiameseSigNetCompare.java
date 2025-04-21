@@ -32,10 +32,10 @@ import com.siameseNetwork.OnnxModelVerifier;
 
 public class SiameseSigNetCompare {
 
-    private static final int KERNEL_SIZE = 3;
     private static final String imageDebugDir = "images_debug";
     private static final double THRESHOLD = 0.5;
-    private static final Logger log = AppLogger.getLogger(SiameseSigNetCompare.class);
+    private static final Logger log =
+            AppLogger.getLogger(SiameseSigNetCompare.class);
 
 
     public String compareSignatures(
@@ -43,6 +43,12 @@ public class SiameseSigNetCompare {
             Mat signatureB
     ) {
         try {
+            log.info("Load onnx model configuration");
+            OnnxConfig cfg = new OnnxConfig();
+            String onnxPath = cfg.getOnnxModelPath();
+            int THRESHOLD = Integer.parseInt(cfg.getOnnxModelThreshold());
+            OnnxModelVerifier onnxVerifier = new OnnxModelVerifier(onnxPath);
+
             log.info("Loading images as grayscale");
 
             validateImages(signatureA, signatureB);
@@ -92,9 +98,6 @@ public class SiameseSigNetCompare {
             double distance = euclideanDistance(inputTensorA, inputTensorB);
             boolean similar = almostEqual(inputTensorA, inputTensorB, 1e-3f);
 
-            OnnxConfig cfg = new OnnxConfig();
-            String onnxPath = cfg.getOnnxModelPath();
-            OnnxModelVerifier onnxVerifier = new OnnxModelVerifier(onnxPath);
             float[][] embeddings = onnxVerifier.getEmbeddings(inputTensorA, inputTensorB);
 
             // DEBUG: print first few values of each embedding to inspect differences
