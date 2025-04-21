@@ -92,7 +92,9 @@ public class SiameseSigNetCompare {
             double distance = euclideanDistance(inputTensorA, inputTensorB);
             boolean similar = almostEqual(inputTensorA, inputTensorB, 1e-3f);
 
-            OnnxModelVerifier onnxVerifier = new OnnxModelVerifier();
+            OnnxConfig cfg = new OnnxConfig();
+            String onnxPath = cfg.getOnnxModelPath();
+            OnnxModelVerifier onnxVerifier = new OnnxModelVerifier(onnxPath);
             float[][] embeddings = onnxVerifier.getEmbeddings(inputTensorA, inputTensorB);
 
             // DEBUG: print first few values of each embedding to inspect differences
