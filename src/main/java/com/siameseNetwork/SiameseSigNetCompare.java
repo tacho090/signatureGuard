@@ -24,10 +24,27 @@ public class SiameseSigNetCompare {
     public SiameseSigNetCompare() {
         OnnxConfig cfg = new OnnxConfig();
         this.onnxPath = cfg.getOnnxModelPath();
-        this.THRESHOLD = Integer.parseInt(cfg.getOnnxModelThreshold());
+        this.THRESHOLD = Double.parseDouble(cfg.getOnnxModelThreshold());
     }
 
-
+    /**
+     * Compares two signature images and returns a human‑readable similarity metric.
+     *
+     * <p>This method validates that both input Mats are non‑null, non‑empty,
+     * and of the same dimensions, converts them to grayscale, prepares them for
+     * the ONNX model, computes their embeddings, calculates the Euclidean distance
+     * between those embeddings, and then formats that distance as a percentage
+     * similarity string.</p>
+     *
+     * @param signatureA the first signature image as an OpenCV Mat; must be non‑null,
+     *                   non‑empty, and the same size as {@code signatureB}
+     * @param signatureB the second signature image as an OpenCV Mat; must be non‑null,
+     *                   non‑empty, and the same size as {@code signatureA}
+     * @return a String representing how similar the two signatures are
+     *         (e.g. "Similarity: 84.21%")
+     * @throws IllegalArgumentException if either image is null, empty, or their sizes differ
+     * @throws OrtException if there is an error loading or running the ONNX Runtime model
+     */
     public String compareSignatures(
             Mat signatureA,
             Mat signatureB
@@ -108,7 +125,14 @@ public class SiameseSigNetCompare {
     }
 
     /**
-     * Computes Euclidean distance between two vectors.
+     * Converts the full stack trace of the given {@link Throwable} into a single string.
+     *
+     * <p>This is useful for embedding the complete stack trace into log messages
+     * or error reports when you need the stack trace as text rather than printed
+     * directly to standard error.</p>
+     *
+     * @param t the {@code Throwable} whose stack trace should be captured
+     * @return a {@code String} containing the complete stack trace of {@code t}
      */
     private String stackTraceToString(Throwable t) {
         StringWriter sw = new StringWriter();
@@ -117,7 +141,15 @@ public class SiameseSigNetCompare {
     }
 
     /**
-     * Computes Euclidean distance between two vectors.
+     * Computes the Euclidean distance between two equal‑length float vectors.
+     *
+     * <p>The Euclidean distance is defined as the square root of the sum of squared
+     * differences between corresponding elements of the two vectors.</p>
+     *
+     * @param a the first vector of floats
+     * @param b the second vector of floats
+     * @return the Euclidean distance between vectors {@code a} and {@code b}
+     * @throws IllegalArgumentException if {@code a} and {@code b} have different lengths
      */
     private double euclideanDistance(float[] a, float[] b) {
         double sum = 0;
@@ -129,7 +161,15 @@ public class SiameseSigNetCompare {
     }
 
     /**
-     * Converts images to grayscale 1 channel inputs.
+     * Converts the given OpenCV Mat to a single‑channel grayscale image.
+     *
+     * <p>This method applies OpenCV's {@code cvtColor} function with
+     * {@code COLOR_BGR2GRAY} to transform a 3‑channel BGR (or 4‑channel BGRA)
+     * image into a one‑channel grayscale image.</p>
+     *
+     * @param signatureImage the source Mat to convert; must be non‑null and not empty
+     * @return a new Mat containing the grayscale version of {@code signatureImage}
+     * @throws IllegalArgumentException if {@code signatureImage} is null or empty
      */
     private Mat convertToGrayScale(Mat signatureImage) {
         Mat grayScaleImage = new Mat();
@@ -139,7 +179,15 @@ public class SiameseSigNetCompare {
     }
 
     /**
-     * Validates images are being imported into the method.
+     * Validates that two OpenCV Mats are ready for comparison.
+     *
+     * <p>This method ensures that both images are non-null, non-empty,
+     * and share the same dimensions (width and height). If any of these
+     * conditions fail, an {@link IllegalArgumentException} is thrown.</p>
+     *
+     * @param img1 the first image to validate; must be non-null and non-empty
+     * @param img2 the second image to validate; must be non-null and non-empty
+     * @throws RuntimeException if either image is null, empty, or if their sizes differ
      */
     private void validateImages(Mat img1, Mat img2) {
         if (img1.empty() || img2.empty()) {
