@@ -43,3 +43,6 @@ images_debug/
 
 ### Project Resources ###
 src/main/resources
+
+### Logs ###
+log/
