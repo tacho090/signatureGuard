@@ -38,8 +38,8 @@ build/
 .DS_Store
 
 ### Test Resources ###
-firmas
-images_debug
+firmas/
+images_debug/
 
 ### Project Resources ###
 src/main/resources
