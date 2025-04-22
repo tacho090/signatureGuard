@@ -31,17 +31,17 @@ public class OnnxConfig {
     }
 
     /** Returns input channels in model.properties */
-    public String inputChannels() {
+    public String getInputChannels() {
         return props.getProperty("input.channels");
     }
 
     /** Returns input height in model.properties */
-    public String inputHeight() {
+    public String getInputHeight() {
         return props.getProperty("input.height");
     }
 
     /** Returns input width in model.properties */
-    public String inputWidth() {
+    public String getInputWidth() {
         return props.getProperty("input.width");
     }
 

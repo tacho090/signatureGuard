@@ -1,52 +1,41 @@
 package com.signatureGuard;
 
+import ai.onnxruntime.OrtException;
 import com.siameseNetwork.OnnxConfig;
-import com.siameseNetwork.OnnxModelVerifier;
 import com.siameseNetwork.SiameseSigNetCompare;
 import com.utilities.AppLogger;
 import org.bytedeco.opencv.global.opencv_imgproc;
 import org.bytedeco.opencv.opencv_core.Mat;
 import org.bytedeco.opencv.opencv_core.Size;
-
-import java.util.Arrays;
-import java.util.List;
 import java.util.logging.Logger;
+
+import static java.lang.Integer.parseInt;
 
 public class ResizeImage {
 
     private static final Logger log =
             AppLogger.getLogger(SiameseSigNetCompare.class);
-    OnnxConfig cfg = new OnnxConfig();
-    String inputChannels = cfg.inputChannels();
-    int THRESHOLD = cfg.getOnnxModelThreshold();
-    OnnxModelVerifier onnxVerifier = new OnnxModelVerifier(onnxPath);
+    private final String inputHeight;
+    private final String inputWidth;
 
-    private static void displaySize(Mat image) {
-        log.info(String.format(
-                "Image 1 Size (height x width):  %d x %d%n",
-                image.size().height(), image.size().width()
-        ));
+    public ResizeImage() throws OrtException {
+        OnnxConfig cfg = new OnnxConfig();
+        this.inputHeight = cfg.getInputHeight();
+        this.inputWidth = cfg.getInputWidth();
     }
 
-    public static Boolean areSameSize(
-            Mat image1, Mat image2) {
-        List<Mat> images = Arrays.asList(image1, image2);
-        images.forEach(img -> ResizeImage.displaySize(img, myLabel));
-        SiameseSigNetCompare.saveImageToDisk(image1, "Saved sourceSignatureA", "sourceSignatureA");
-        SiameseSigNetCompare.saveImageToDisk(image2, "Saved sourceSignatureB", "sourceSignatureB");
-
-        return image1.size().width() == image2.size().width() &&
-                image1.size().height() == image2.size().height();
-    }
-
-    public static Mat resizeImage(
+    public Mat resizeImage(
             Mat imageToBeResized
     ){
+        log.info("Resizing images");
         Mat resizedImage = new Mat();
         opencv_imgproc.resize(
                 imageToBeResized,
                 resizedImage,
-                new Size(128, 128));
+                new Size(
+                    parseInt(this.inputHeight),
+                    parseInt(this.inputWidth)
+                ));
         return resizedImage;
     }
 }

@@ -1,41 +1,31 @@
 package com.siameseNetwork;
 
-import ai.onnxruntime.OnnxTensor;
 import ai.onnxruntime.OrtException;
-import ai.onnxruntime.OrtSession;
 import com.signatureGuard.ResizeImage;
 import com.utilities.AppLogger;
-import org.bytedeco.javacpp.indexer.UByteIndexer;
 import org.bytedeco.javacpp.indexer.FloatIndexer;
-import org.bytedeco.javacpp.indexer.Indexer;
-import org.bytedeco.opencv.global.opencv_core;
 import org.bytedeco.opencv.global.opencv_imgproc;
 import org.bytedeco.opencv.opencv_core.Mat;
-import org.bytedeco.opencv.opencv_core.Scalar;
-import org.bytedeco.opencv.opencv_core.Size;
 import org.opencv.core.CvType;
-import java.util.Arrays;
 
-import java.nio.FloatBuffer;
-import java.text.DecimalFormat;
-import java.util.List;
-import java.util.Map;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.logging.Logger;
-
-import static org.bytedeco.opencv.global.opencv_core.CV_8UC1;
-import static org.bytedeco.opencv.global.opencv_core.absdiff;
-import static org.bytedeco.opencv.global.opencv_imgcodecs.imwrite;
-import static org.bytedeco.opencv.global.opencv_imgproc.*;
-
-import com.siameseNetwork.OnnxModelVerifier;
 
 
 public class SiameseSigNetCompare {
 
     private static final String imageDebugDir = "images_debug";
-    private static final double THRESHOLD = 0.5;
+    protected double THRESHOLD;
     private static final Logger log =
             AppLogger.getLogger(SiameseSigNetCompare.class);
+    private final String onnxPath;
+
+    public SiameseSigNetCompare() {
+        OnnxConfig cfg = new OnnxConfig();
+        this.onnxPath = cfg.getOnnxModelPath();
+        this.THRESHOLD = Integer.parseInt(cfg.getOnnxModelThreshold());
+    }
 
 
     public String compareSignatures(
@@ -43,90 +33,87 @@ public class SiameseSigNetCompare {
             Mat signatureB
     ) {
         try {
-            log.info("Load onnx model configuration");
-            OnnxConfig cfg = new OnnxConfig();
-            String onnxPath = cfg.getOnnxModelPath();
-            int THRESHOLD = Integer.parseInt(cfg.getOnnxModelThreshold());
-            OnnxModelVerifier onnxVerifier = new OnnxModelVerifier(onnxPath);
+            Mat[] images = {signatureA, signatureB};
 
-            log.info("Loading images as grayscale");
-
-            validateImages(signatureA, signatureB);
-
-            Mat img1 = convertToGrayScale(signatureA, "firstImageGrayscale");
-            Mat img2 = convertToGrayScale(signatureB, "secondImageGrayscale");
-
-            validateImages(img1, img2);
-
-            Mat resizedImage1 = ResizeImage.resizeImage(img1);
-            Mat resizedImage2 = ResizeImage.resizeImage(img2);
-
-            resizedImage1.convertTo(resizedImage1, CvType.CV_32F);
-            resizedImage2.convertTo(resizedImage2, CvType.CV_32F);
-
-            SiameseSigNetCompare.saveImageToDisk(
-                    resizedImage1, "Save Resized image 1", "resizedImage1");
-            SiameseSigNetCompare.saveImageToDisk(
-                    resizedImage2, "Save Resized image 2", "resizedImage2");
+            log.info("Validating images");
+            validateImages(images[0], images[1]);
 
 
-            int rows1 = resizedImage1.rows(), cols1 = resizedImage1.cols();
-            int rows2 = resizedImage2.rows(), cols2 = resizedImage2.cols();
-            float[] inputTensorA = new float[rows1 * cols1];
-            float[] inputTensorB = new float[rows2 * cols2];
-
-            FloatIndexer fidx1 = resizedImage1.createIndexer();
-            int flatIdx = 0;
-            for (int y = 0; y < rows1; y++) {
-                for (int x = 0; x < cols1; x++) {
-                    inputTensorA[flatIdx++] = fidx1.get(y, x);
-                }
+            log.info("Convert images to grayscale");
+            Mat[] grayImages = new Mat[images.length];
+            String[] grayNames = {
+                    "firstImageGrayscale",
+                    "secondImageGrayscale"
+            };
+            for (int i = 0; i < images.length; i++) {
+                grayImages[i] = convertToGrayScale(images[i]);
             }
-            fidx1.release();
 
-            FloatIndexer fidx2 = resizedImage2.createIndexer();
-            int flatIdx2 = 0;
-            for (int y = 0; y < rows2; y++) {
-                for (int x = 0; x < cols2; x++) {
-                    inputTensorB[flatIdx2++] = fidx2.get(y, x);
-                }
+            log.info("Resizing and converting images to new +" +
+                    "input weights and heights and 32-bit float 1 channel images");
+            Mat[] resizedImages = new Mat[images.length];
+            ResizeImage resizeImage = new ResizeImage();
+            for (int i = 0; i < grayImages.length; i++) {
+                resizedImages[i] = resizeImage.resizeImage(grayImages[i]);
+                resizedImages[i].convertTo(resizedImages[i], CvType.CV_32F);
             }
-            fidx2.release();
 
+            log.info("Creating tensors");
+            int[] rows = new int[resizedImages.length];
+            int[] cols = new int[resizedImages.length];
+            for (int i = 0; i < resizedImages.length; i++) {
+                rows[i] = resizedImages[i].rows();
+                cols[i] = resizedImages[i].cols();
+            }
+            float[] inputTensorA = new float[rows[0] * cols[0]];
+            float[] inputTensorB = new float[rows[1] * cols[1]];
 
-            boolean identical = Arrays.equals(inputTensorA, inputTensorB);
-            double distance = euclideanDistance(inputTensorA, inputTensorB);
-            boolean similar = almostEqual(inputTensorA, inputTensorB, 1e-3f);
+            log.info("Generate flat indexes for resized Images");
+            for (int i = 0; i < resizedImages.length; i++) {
+                FloatIndexer floatIndexer = resizedImages[i].createIndexer();
+                int flatIndex = 0;
+                for (int y = 0; y < rows[i]; y++) {
+                    for (int x = 0; x < cols[i]; x++) {
+                        inputTensorA[flatIndex++] = floatIndexer.get(y, x);
+                    }
+                }
+                floatIndexer.release();
+            }
 
-            float[][] embeddings = onnxVerifier.getEmbeddings(inputTensorA, inputTensorB);
-
-            // DEBUG: print first few values of each embedding to inspect differences
-            int newLength = 128;
-            System.out.println("Embedding A (first 5 vals): " +
-                    Arrays.toString(Arrays.copyOf(embeddings[0], newLength)));
-            System.out.println("Embedding B (first 5 vals): " +
-                    Arrays.toString(Arrays.copyOf(embeddings[1], newLength)));
+            log.info("Load onnx model configuration and run model with signatures");
+            OnnxModelVerifier onnxModelVerifier = new OnnxModelVerifier(this.onnxPath);
+            float[][] embeddings = onnxModelVerifier.getEmbeddings(
+                    inputTensorA, inputTensorB);
 
             double euclideanDistance = euclideanDistance(embeddings[0], embeddings[1]);
-            System.out.printf("Distance between signatures: %.4f\n", euclideanDistance);
+            log.info(String.format("Distance between signatures: %.4f\n", euclideanDistance));
 
-            if (distance < THRESHOLD) {
-                return "✔️ Signatures match";
+            if (euclideanDistance < THRESHOLD) {
+                return String.format(
+                        "✔️ Distance between signatures: %.4f\n." +
+                                "Euclidean distance Threshold: %.4f\n." +
+                                "Signatures match!",
+                        euclideanDistance, THRESHOLD);
             } else {
-                return "❌ Signatures do NOT match";
+                return String.format(
+                        "❌ Distance between signatures: %.4f\n." +
+                                "Euclidean distance Threshold: %.4f\n." +
+                                "Signatures do NOT match!",
+                        euclideanDistance, THRESHOLD);
             }
         } catch (OrtException e) {
-            e.printStackTrace();
-            return "There was an error";
+            return String.format(
+                    "There was an error. Review stacktrace: %s", stackTraceToString(e));
         }
     }
 
-    public static boolean almostEqual(float[] a, float[] b, float tol) {
-        if (a.length != b.length) return false;
-        for (int i = 0; i < a.length; i++) {
-            if (Math.abs(a[i] - b[i]) > tol) return false;
-        }
-        return true;
+    /**
+     * Computes Euclidean distance between two vectors.
+     */
+    private String stackTraceToString(Throwable t) {
+        StringWriter sw = new StringWriter();
+        t.printStackTrace(new PrintWriter(sw));
+        return sw.toString();
     }
 
     /**
@@ -141,22 +128,24 @@ public class SiameseSigNetCompare {
         return Math.sqrt(sum);
     }
 
-    private Mat convertToGrayScale(Mat signatureImage, String identifier) {
+    /**
+     * Converts images to grayscale 1 channel inputs.
+     */
+    private Mat convertToGrayScale(Mat signatureImage) {
         Mat grayScaleImage = new Mat();
-        opencv_imgproc.cvtColor(signatureImage, grayScaleImage, opencv_imgproc.COLOR_BGR2GRAY);
-        saveImageToDisk(grayScaleImage, "Saving grayscale image ", "grayscale_" + identifier);
+        opencv_imgproc.cvtColor(
+                signatureImage, grayScaleImage, opencv_imgproc.COLOR_BGR2GRAY);
         return grayScaleImage;
     }
 
+    /**
+     * Validates images are being imported into the method.
+     */
     private void validateImages(Mat img1, Mat img2) {
         if (img1.empty() || img2.empty()) {
-            System.err.println("Error: One or both images could not be loaded.");
+            log.info("Error: One or both images could not be loaded.");
             throw new RuntimeException("Error: images are either empty or null. Cannot process image.");
         }
     }
 
-    public static void saveImageToDisk(Mat imageToSave, String message, String name) {
-        System.out.println(message);
-        imwrite(String.format("%s/%s.jpg", imageDebugDir, name), imageToSave);
-    }
 }
