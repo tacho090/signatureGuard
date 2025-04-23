@@ -1,0 +1,294 @@
+2025-04-20 11:06:58 INFO    [com.siameseNetwork.SiameseSigNetCompare] Loading images as grayscale 
+2025-04-20 11:07:07 INFO    [com.siameseNetwork.SiameseSigNetCompare] Loading images as grayscale 
+2025-04-21 21:50:00 SEVERE  [org.apache.catalina.core.ContainerBase.[Tomcat].[localhost].[/].[dispatcherServlet]] Servlet.service() for servlet [dispatcherServlet] in context with path [] threw exception [Request processing failed: java.lang.NumberFormatException: For input string: "0.5"] with root cause 
+2025-04-21 21:53:06 INFO    [com.siameseNetwork.SiameseSigNetCompare] Validating images 
+2025-04-21 21:53:06 INFO    [com.siameseNetwork.SiameseSigNetCompare] Convert images to grayscale 
+2025-04-21 21:53:06 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing and converting images to new +input weights and heights and 32-bit float 1 channel images 
+2025-04-21 21:53:06 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing images 
+2025-04-21 21:53:06 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing images 
+2025-04-21 21:53:06 INFO    [com.siameseNetwork.SiameseSigNetCompare] Creating tensors 
+2025-04-21 21:53:06 INFO    [com.siameseNetwork.SiameseSigNetCompare] Generate flat indexes for resized Images 
+2025-04-21 21:53:06 INFO    [com.siameseNetwork.SiameseSigNetCompare] Load onnx model configuration and run model with signatures 
+2025-04-21 21:53:06 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create the runtime environment 
+2025-04-21 21:53:06 INFO    [com.siameseNetwork.SiameseSigNetCompare] Load the ONNX model into a session 
+2025-04-21 21:53:07 INFO    [com.siameseNetwork.SiameseSigNetCompare] Prepare ONNX tensors with shape [1,1,128,128] 
+2025-04-21 21:53:07 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create onnxTensor 
+2025-04-21 21:53:07 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create onnxTensor 
+2025-04-21 21:53:07 INFO    [com.siameseNetwork.SiameseSigNetCompare] Run the onnx model 
+2025-04-21 21:53:07 INFO    [com.siameseNetwork.SiameseSigNetCompare] Extract embeddings 
+2025-04-21 21:53:07 INFO    [com.siameseNetwork.SiameseSigNetCompare] Distance between signatures: 6305.0315
+ 
+2025-04-21 22:00:42 INFO    [com.siameseNetwork.SiameseSigNetCompare] Validating images 
+2025-04-21 22:00:42 INFO    [com.siameseNetwork.SiameseSigNetCompare] Convert images to grayscale 
+2025-04-21 22:00:42 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing and converting images to new +input weights and heights and 32-bit float 1 channel images 
+2025-04-21 22:00:42 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing images 
+2025-04-21 22:00:42 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing images 
+2025-04-21 22:00:42 INFO    [com.siameseNetwork.SiameseSigNetCompare] Creating tensors 
+2025-04-21 22:00:42 INFO    [com.siameseNetwork.SiameseSigNetCompare] Generate flat indexes for resized Images 
+2025-04-21 22:00:42 INFO    [com.siameseNetwork.SiameseSigNetCompare] Load onnx model configuration and run model with signatures 
+2025-04-21 22:00:42 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create the runtime environment 
+2025-04-21 22:00:42 INFO    [com.siameseNetwork.SiameseSigNetCompare] Load the ONNX model into a session 
+2025-04-21 22:00:42 INFO    [com.siameseNetwork.SiameseSigNetCompare] Prepare ONNX tensors with shape [1,1,128,128] 
+2025-04-21 22:00:42 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create onnxTensor 
+2025-04-21 22:00:42 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create onnxTensor 
+2025-04-21 22:00:42 INFO    [com.siameseNetwork.SiameseSigNetCompare] Run the onnx model 
+2025-04-21 22:00:42 INFO    [com.siameseNetwork.SiameseSigNetCompare] Extract embeddings 
+2025-04-21 22:00:42 INFO    [com.siameseNetwork.SiameseSigNetCompare] Distance between signatures: 6305.0315
+ 
+2025-04-21 22:00:57 INFO    [com.siameseNetwork.SiameseSigNetCompare] Validating images 
+2025-04-21 22:00:57 INFO    [com.siameseNetwork.SiameseSigNetCompare] Convert images to grayscale 
+2025-04-21 22:00:57 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing and converting images to new +input weights and heights and 32-bit float 1 channel images 
+2025-04-21 22:00:57 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing images 
+2025-04-21 22:00:57 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing images 
+2025-04-21 22:00:57 INFO    [com.siameseNetwork.SiameseSigNetCompare] Creating tensors 
+2025-04-21 22:00:57 INFO    [com.siameseNetwork.SiameseSigNetCompare] Generate flat indexes for resized Images 
+2025-04-21 22:00:57 INFO    [com.siameseNetwork.SiameseSigNetCompare] Load onnx model configuration and run model with signatures 
+2025-04-21 22:00:57 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create the runtime environment 
+2025-04-21 22:00:57 INFO    [com.siameseNetwork.SiameseSigNetCompare] Load the ONNX model into a session 
+2025-04-21 22:00:58 INFO    [com.siameseNetwork.SiameseSigNetCompare] Prepare ONNX tensors with shape [1,1,128,128] 
+2025-04-21 22:00:58 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create onnxTensor 
+2025-04-21 22:00:58 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create onnxTensor 
+2025-04-21 22:00:58 INFO    [com.siameseNetwork.SiameseSigNetCompare] Run the onnx model 
+2025-04-21 22:00:58 INFO    [com.siameseNetwork.SiameseSigNetCompare] Extract embeddings 
+2025-04-21 22:00:58 INFO    [com.siameseNetwork.SiameseSigNetCompare] Distance between signatures: 5957.7032
+ 
+2025-04-21 22:01:07 INFO    [com.siameseNetwork.SiameseSigNetCompare] Validating images 
+2025-04-21 22:01:07 INFO    [com.siameseNetwork.SiameseSigNetCompare] Convert images to grayscale 
+2025-04-21 22:01:07 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing and converting images to new +input weights and heights and 32-bit float 1 channel images 
+2025-04-21 22:01:07 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing images 
+2025-04-21 22:01:07 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing images 
+2025-04-21 22:01:07 INFO    [com.siameseNetwork.SiameseSigNetCompare] Creating tensors 
+2025-04-21 22:01:07 INFO    [com.siameseNetwork.SiameseSigNetCompare] Generate flat indexes for resized Images 
+2025-04-21 22:01:07 INFO    [com.siameseNetwork.SiameseSigNetCompare] Load onnx model configuration and run model with signatures 
+2025-04-21 22:01:07 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create the runtime environment 
+2025-04-21 22:01:07 INFO    [com.siameseNetwork.SiameseSigNetCompare] Load the ONNX model into a session 
+2025-04-21 22:01:07 INFO    [com.siameseNetwork.SiameseSigNetCompare] Prepare ONNX tensors with shape [1,1,128,128] 
+2025-04-21 22:01:07 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create onnxTensor 
+2025-04-21 22:01:07 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create onnxTensor 
+2025-04-21 22:01:07 INFO    [com.siameseNetwork.SiameseSigNetCompare] Run the onnx model 
+2025-04-21 22:01:07 INFO    [com.siameseNetwork.SiameseSigNetCompare] Extract embeddings 
+2025-04-21 22:01:07 INFO    [com.siameseNetwork.SiameseSigNetCompare] Distance between signatures: 5957.7032
+ 
+2025-04-21 22:01:19 INFO    [com.siameseNetwork.SiameseSigNetCompare] Validating images 
+2025-04-21 22:01:19 INFO    [com.siameseNetwork.SiameseSigNetCompare] Convert images to grayscale 
+2025-04-21 22:01:19 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing and converting images to new +input weights and heights and 32-bit float 1 channel images 
+2025-04-21 22:01:19 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing images 
+2025-04-21 22:01:19 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing images 
+2025-04-21 22:01:19 INFO    [com.siameseNetwork.SiameseSigNetCompare] Creating tensors 
+2025-04-21 22:01:19 INFO    [com.siameseNetwork.SiameseSigNetCompare] Generate flat indexes for resized Images 
+2025-04-21 22:01:19 INFO    [com.siameseNetwork.SiameseSigNetCompare] Load onnx model configuration and run model with signatures 
+2025-04-21 22:01:19 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create the runtime environment 
+2025-04-21 22:01:19 INFO    [com.siameseNetwork.SiameseSigNetCompare] Load the ONNX model into a session 
+2025-04-21 22:01:20 INFO    [com.siameseNetwork.SiameseSigNetCompare] Prepare ONNX tensors with shape [1,1,128,128] 
+2025-04-21 22:01:20 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create onnxTensor 
+2025-04-21 22:01:20 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create onnxTensor 
+2025-04-21 22:01:20 INFO    [com.siameseNetwork.SiameseSigNetCompare] Run the onnx model 
+2025-04-21 22:01:20 INFO    [com.siameseNetwork.SiameseSigNetCompare] Extract embeddings 
+2025-04-21 22:01:20 INFO    [com.siameseNetwork.SiameseSigNetCompare] Distance between signatures: 6305.0315
+ 
+2025-04-21 22:01:26 INFO    [com.siameseNetwork.SiameseSigNetCompare] Validating images 
+2025-04-21 22:01:26 INFO    [com.siameseNetwork.SiameseSigNetCompare] Convert images to grayscale 
+2025-04-21 22:01:26 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing and converting images to new +input weights and heights and 32-bit float 1 channel images 
+2025-04-21 22:01:26 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing images 
+2025-04-21 22:01:26 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing images 
+2025-04-21 22:01:26 INFO    [com.siameseNetwork.SiameseSigNetCompare] Creating tensors 
+2025-04-21 22:01:26 INFO    [com.siameseNetwork.SiameseSigNetCompare] Generate flat indexes for resized Images 
+2025-04-21 22:01:26 INFO    [com.siameseNetwork.SiameseSigNetCompare] Load onnx model configuration and run model with signatures 
+2025-04-21 22:01:26 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create the runtime environment 
+2025-04-21 22:01:26 INFO    [com.siameseNetwork.SiameseSigNetCompare] Load the ONNX model into a session 
+2025-04-21 22:01:27 INFO    [com.siameseNetwork.SiameseSigNetCompare] Prepare ONNX tensors with shape [1,1,128,128] 
+2025-04-21 22:01:27 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create onnxTensor 
+2025-04-21 22:01:27 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create onnxTensor 
+2025-04-21 22:01:27 INFO    [com.siameseNetwork.SiameseSigNetCompare] Run the onnx model 
+2025-04-21 22:01:27 INFO    [com.siameseNetwork.SiameseSigNetCompare] Extract embeddings 
+2025-04-21 22:01:27 INFO    [com.siameseNetwork.SiameseSigNetCompare] Distance between signatures: 5957.7032
+ 
+2025-04-21 22:01:39 INFO    [com.siameseNetwork.SiameseSigNetCompare] Validating images 
+2025-04-21 22:01:39 INFO    [com.siameseNetwork.SiameseSigNetCompare] Convert images to grayscale 
+2025-04-21 22:01:39 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing and converting images to new +input weights and heights and 32-bit float 1 channel images 
+2025-04-21 22:01:39 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing images 
+2025-04-21 22:01:39 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing images 
+2025-04-21 22:01:39 INFO    [com.siameseNetwork.SiameseSigNetCompare] Creating tensors 
+2025-04-21 22:01:39 INFO    [com.siameseNetwork.SiameseSigNetCompare] Generate flat indexes for resized Images 
+2025-04-21 22:01:39 INFO    [com.siameseNetwork.SiameseSigNetCompare] Load onnx model configuration and run model with signatures 
+2025-04-21 22:01:39 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create the runtime environment 
+2025-04-21 22:01:39 INFO    [com.siameseNetwork.SiameseSigNetCompare] Load the ONNX model into a session 
+2025-04-21 22:01:39 INFO    [com.siameseNetwork.SiameseSigNetCompare] Prepare ONNX tensors with shape [1,1,128,128] 
+2025-04-21 22:01:39 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create onnxTensor 
+2025-04-21 22:01:39 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create onnxTensor 
+2025-04-21 22:01:39 INFO    [com.siameseNetwork.SiameseSigNetCompare] Run the onnx model 
+2025-04-21 22:01:39 INFO    [com.siameseNetwork.SiameseSigNetCompare] Extract embeddings 
+2025-04-21 22:01:39 INFO    [com.siameseNetwork.SiameseSigNetCompare] Distance between signatures: 4437.0895
+ 
+2025-04-22 22:07:25 INFO    [com.siameseNetwork.SiameseSigNetCompare] Validating images 
+2025-04-22 22:07:25 INFO    [com.siameseNetwork.SiameseSigNetCompare] Convert images to grayscale 
+2025-04-22 22:07:25 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing and converting images to new +input weights and heights and 32-bit float 1 channel images 
+2025-04-22 22:07:25 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing images 
+2025-04-22 22:07:25 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing images 
+2025-04-22 22:07:25 INFO    [com.siameseNetwork.SiameseSigNetCompare] Creating tensors 
+2025-04-22 22:07:25 INFO    [com.siameseNetwork.SiameseSigNetCompare] Generate flat indexes for resized Images 
+2025-04-22 22:07:25 INFO    [com.siameseNetwork.SiameseSigNetCompare] Load onnx model configuration and run model with signatures 
+2025-04-22 22:07:25 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create the runtime environment 
+2025-04-22 22:07:25 INFO    [com.siameseNetwork.SiameseSigNetCompare] Load the ONNX model into a session 
+2025-04-22 22:07:26 INFO    [com.siameseNetwork.SiameseSigNetCompare] Prepare ONNX tensors with shape [1,1,128,128] 
+2025-04-22 22:07:26 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create onnxTensor 
+2025-04-22 22:07:26 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create onnxTensor 
+2025-04-22 22:07:26 INFO    [com.siameseNetwork.SiameseSigNetCompare] Run the onnx model 
+2025-04-22 22:07:26 INFO    [com.siameseNetwork.SiameseSigNetCompare] Extract embeddings 
+2025-04-22 22:07:26 INFO    [com.siameseNetwork.SiameseSigNetCompare] Distance between signatures: 5957.7032
+ 
+2025-04-22 22:07:51 INFO    [com.siameseNetwork.SiameseSigNetCompare] Validating images 
+2025-04-22 22:08:06 INFO    [com.siameseNetwork.SiameseSigNetCompare] Convert images to grayscale 
+2025-04-22 22:08:21 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing and converting images to new +input weights and heights and 32-bit float 1 channel images 
+2025-04-22 22:08:21 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing images 
+2025-04-22 22:08:21 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing images 
+2025-04-22 22:08:49 INFO    [com.siameseNetwork.SiameseSigNetCompare] Creating tensors 
+2025-04-22 22:13:10 INFO    [com.siameseNetwork.SiameseSigNetCompare] Generate flat indexes for resized Images 
+2025-04-22 22:13:10 INFO    [com.siameseNetwork.SiameseSigNetCompare] Load onnx model configuration and run model with signatures 
+2025-04-22 22:13:10 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create the runtime environment 
+2025-04-22 22:13:22 INFO    [com.siameseNetwork.SiameseSigNetCompare] Validating images 
+2025-04-22 22:13:30 INFO    [com.siameseNetwork.SiameseSigNetCompare] Convert images to grayscale 
+2025-04-22 22:13:30 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing and converting images to new +input weights and heights and 32-bit float 1 channel images 
+2025-04-22 22:13:30 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing images 
+2025-04-22 22:13:30 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing images 
+2025-04-22 22:13:30 INFO    [com.siameseNetwork.SiameseSigNetCompare] Creating tensors 
+2025-04-22 22:15:16 INFO    [com.siameseNetwork.SiameseSigNetCompare] Generate flat indexes for resized Images 
+2025-04-22 22:15:16 INFO    [com.siameseNetwork.SiameseSigNetCompare] Load onnx model configuration and run model with signatures 
+2025-04-22 22:15:16 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create the runtime environment 
+2025-04-22 22:15:29 INFO    [com.siameseNetwork.SiameseSigNetCompare] Validating images 
+2025-04-22 22:15:29 INFO    [com.siameseNetwork.SiameseSigNetCompare] Convert images to grayscale 
+2025-04-22 22:15:29 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing and converting images to new +input weights and heights and 32-bit float 1 channel images 
+2025-04-22 22:15:29 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing images 
+2025-04-22 22:15:29 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing images 
+2025-04-22 22:15:29 INFO    [com.siameseNetwork.SiameseSigNetCompare] Creating tensors 
+2025-04-22 22:15:29 INFO    [com.siameseNetwork.SiameseSigNetCompare] Generate flat indexes for resized Images 
+2025-04-22 22:16:38 INFO    [com.siameseNetwork.SiameseSigNetCompare] Load onnx model configuration and run model with signatures 
+2025-04-22 22:16:38 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create the runtime environment 
+2025-04-22 22:16:48 INFO    [com.siameseNetwork.SiameseSigNetCompare] Validating images 
+2025-04-22 22:16:48 INFO    [com.siameseNetwork.SiameseSigNetCompare] Convert images to grayscale 
+2025-04-22 22:16:48 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing and converting images to new +input weights and heights and 32-bit float 1 channel images 
+2025-04-22 22:16:48 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing images 
+2025-04-22 22:16:48 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing images 
+2025-04-22 22:16:48 INFO    [com.siameseNetwork.SiameseSigNetCompare] Creating tensors 
+2025-04-22 22:16:48 INFO    [com.siameseNetwork.SiameseSigNetCompare] Generate flat indexes for resized Images 
+2025-04-22 22:17:21 INFO    [com.siameseNetwork.SiameseSigNetCompare] Load onnx model configuration and run model with signatures 
+2025-04-22 22:17:21 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create the runtime environment 
+2025-04-22 22:17:45 INFO    [com.siameseNetwork.SiameseSigNetCompare] Validating images 
+2025-04-22 22:17:45 INFO    [com.siameseNetwork.SiameseSigNetCompare] Convert images to grayscale 
+2025-04-22 22:17:45 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing and converting images to new +input weights and heights and 32-bit float 1 channel images 
+2025-04-22 22:17:45 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing images 
+2025-04-22 22:17:45 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing images 
+2025-04-22 22:17:45 INFO    [com.siameseNetwork.SiameseSigNetCompare] Creating tensors 
+2025-04-22 22:17:45 INFO    [com.siameseNetwork.SiameseSigNetCompare] Generate flat indexes for resized Images 
+2025-04-22 22:17:45 INFO    [com.siameseNetwork.SiameseSigNetCompare] Load onnx model configuration and run model with signatures 
+2025-04-22 22:17:45 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create the runtime environment 
+2025-04-22 22:17:45 INFO    [com.siameseNetwork.SiameseSigNetCompare] Load the ONNX model into a session 
+2025-04-22 22:17:46 INFO    [com.siameseNetwork.SiameseSigNetCompare] Prepare ONNX tensors with shape [1,1,128,128] 
+2025-04-22 22:17:46 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create onnxTensor 
+2025-04-22 22:17:46 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create onnxTensor 
+2025-04-22 22:17:46 INFO    [com.siameseNetwork.SiameseSigNetCompare] Run the onnx model 
+2025-04-22 22:17:46 INFO    [com.siameseNetwork.SiameseSigNetCompare] Extract embeddings 
+2025-04-22 22:17:46 INFO    [com.siameseNetwork.SiameseSigNetCompare] Distance between signatures: 0.0000
+ 
+2025-04-22 22:17:56 INFO    [com.siameseNetwork.SiameseSigNetCompare] Validating images 
+2025-04-22 22:17:56 INFO    [com.siameseNetwork.SiameseSigNetCompare] Convert images to grayscale 
+2025-04-22 22:17:56 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing and converting images to new +input weights and heights and 32-bit float 1 channel images 
+2025-04-22 22:17:56 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing images 
+2025-04-22 22:17:56 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing images 
+2025-04-22 22:17:56 INFO    [com.siameseNetwork.SiameseSigNetCompare] Creating tensors 
+2025-04-22 22:17:56 INFO    [com.siameseNetwork.SiameseSigNetCompare] Generate flat indexes for resized Images 
+2025-04-22 22:17:56 INFO    [com.siameseNetwork.SiameseSigNetCompare] Load onnx model configuration and run model with signatures 
+2025-04-22 22:17:56 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create the runtime environment 
+2025-04-22 22:17:56 INFO    [com.siameseNetwork.SiameseSigNetCompare] Load the ONNX model into a session 
+2025-04-22 22:17:56 INFO    [com.siameseNetwork.SiameseSigNetCompare] Prepare ONNX tensors with shape [1,1,128,128] 
+2025-04-22 22:17:56 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create onnxTensor 
+2025-04-22 22:17:56 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create onnxTensor 
+2025-04-22 22:17:56 INFO    [com.siameseNetwork.SiameseSigNetCompare] Run the onnx model 
+2025-04-22 22:17:56 INFO    [com.siameseNetwork.SiameseSigNetCompare] Extract embeddings 
+2025-04-22 22:17:56 INFO    [com.siameseNetwork.SiameseSigNetCompare] Distance between signatures: 377.1583
+ 
+2025-04-22 22:18:06 INFO    [com.siameseNetwork.SiameseSigNetCompare] Validating images 
+2025-04-22 22:18:06 INFO    [com.siameseNetwork.SiameseSigNetCompare] Convert images to grayscale 
+2025-04-22 22:18:06 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing and converting images to new +input weights and heights and 32-bit float 1 channel images 
+2025-04-22 22:18:06 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing images 
+2025-04-22 22:18:06 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing images 
+2025-04-22 22:18:06 INFO    [com.siameseNetwork.SiameseSigNetCompare] Creating tensors 
+2025-04-22 22:18:06 INFO    [com.siameseNetwork.SiameseSigNetCompare] Generate flat indexes for resized Images 
+2025-04-22 22:18:06 INFO    [com.siameseNetwork.SiameseSigNetCompare] Load onnx model configuration and run model with signatures 
+2025-04-22 22:18:06 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create the runtime environment 
+2025-04-22 22:18:06 INFO    [com.siameseNetwork.SiameseSigNetCompare] Load the ONNX model into a session 
+2025-04-22 22:18:07 INFO    [com.siameseNetwork.SiameseSigNetCompare] Prepare ONNX tensors with shape [1,1,128,128] 
+2025-04-22 22:18:07 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create onnxTensor 
+2025-04-22 22:18:07 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create onnxTensor 
+2025-04-22 22:18:07 INFO    [com.siameseNetwork.SiameseSigNetCompare] Run the onnx model 
+2025-04-22 22:18:07 INFO    [com.siameseNetwork.SiameseSigNetCompare] Extract embeddings 
+2025-04-22 22:18:07 INFO    [com.siameseNetwork.SiameseSigNetCompare] Distance between signatures: 0.0000
+ 
+2025-04-22 22:22:08 INFO    [com.siameseNetwork.SiameseSigNetCompare] Validating images 
+2025-04-22 22:22:08 INFO    [com.siameseNetwork.SiameseSigNetCompare] Convert images to grayscale 
+2025-04-22 22:22:08 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing and converting images to new +input weights and heights and 32-bit float 1 channel images 
+2025-04-22 22:22:08 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing images 
+2025-04-22 22:22:08 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing images 
+2025-04-22 22:22:08 INFO    [com.siameseNetwork.SiameseSigNetCompare] Creating tensors 
+2025-04-22 22:22:08 INFO    [com.siameseNetwork.SiameseSigNetCompare] Generate flat indexes for resized Images 
+2025-04-22 22:22:08 INFO    [com.siameseNetwork.SiameseSigNetCompare] Load onnx model configuration and run model with signatures 
+2025-04-22 22:22:08 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create the runtime environment 
+2025-04-22 22:22:08 INFO    [com.siameseNetwork.SiameseSigNetCompare] Load the ONNX model into a session 
+2025-04-22 22:22:09 INFO    [com.siameseNetwork.SiameseSigNetCompare] Prepare ONNX tensors with shape [1,1,128,128] 
+2025-04-22 22:22:09 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create onnxTensor 
+2025-04-22 22:22:09 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create onnxTensor 
+2025-04-22 22:22:09 INFO    [com.siameseNetwork.SiameseSigNetCompare] Run the onnx model 
+2025-04-22 22:22:09 INFO    [com.siameseNetwork.SiameseSigNetCompare] Extract embeddings 
+2025-04-22 22:22:09 INFO    [com.siameseNetwork.SiameseSigNetCompare] Distance between signatures: 0.0000
+ 
+2025-04-22 22:22:15 INFO    [com.siameseNetwork.SiameseSigNetCompare] Validating images 
+2025-04-22 22:22:15 INFO    [com.siameseNetwork.SiameseSigNetCompare] Convert images to grayscale 
+2025-04-22 22:22:15 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing and converting images to new +input weights and heights and 32-bit float 1 channel images 
+2025-04-22 22:22:15 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing images 
+2025-04-22 22:22:15 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing images 
+2025-04-22 22:22:15 INFO    [com.siameseNetwork.SiameseSigNetCompare] Creating tensors 
+2025-04-22 22:22:15 INFO    [com.siameseNetwork.SiameseSigNetCompare] Generate flat indexes for resized Images 
+2025-04-22 22:22:15 INFO    [com.siameseNetwork.SiameseSigNetCompare] Load onnx model configuration and run model with signatures 
+2025-04-22 22:22:15 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create the runtime environment 
+2025-04-22 22:22:15 INFO    [com.siameseNetwork.SiameseSigNetCompare] Load the ONNX model into a session 
+2025-04-22 22:22:15 INFO    [com.siameseNetwork.SiameseSigNetCompare] Prepare ONNX tensors with shape [1,1,128,128] 
+2025-04-22 22:22:15 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create onnxTensor 
+2025-04-22 22:22:15 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create onnxTensor 
+2025-04-22 22:22:15 INFO    [com.siameseNetwork.SiameseSigNetCompare] Run the onnx model 
+2025-04-22 22:22:15 INFO    [com.siameseNetwork.SiameseSigNetCompare] Extract embeddings 
+2025-04-22 22:22:15 INFO    [com.siameseNetwork.SiameseSigNetCompare] Distance between signatures: 377.1583
+ 
+2025-04-22 22:22:26 INFO    [com.siameseNetwork.SiameseSigNetCompare] Validating images 
+2025-04-22 22:22:26 INFO    [com.siameseNetwork.SiameseSigNetCompare] Convert images to grayscale 
+2025-04-22 22:22:26 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing and converting images to new +input weights and heights and 32-bit float 1 channel images 
+2025-04-22 22:22:26 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing images 
+2025-04-22 22:22:26 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing images 
+2025-04-22 22:22:26 INFO    [com.siameseNetwork.SiameseSigNetCompare] Creating tensors 
+2025-04-22 22:22:26 INFO    [com.siameseNetwork.SiameseSigNetCompare] Generate flat indexes for resized Images 
+2025-04-22 22:22:26 INFO    [com.siameseNetwork.SiameseSigNetCompare] Load onnx model configuration and run model with signatures 
+2025-04-22 22:22:26 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create the runtime environment 
+2025-04-22 22:22:26 INFO    [com.siameseNetwork.SiameseSigNetCompare] Load the ONNX model into a session 
+2025-04-22 22:22:26 INFO    [com.siameseNetwork.SiameseSigNetCompare] Prepare ONNX tensors with shape [1,1,128,128] 
+2025-04-22 22:22:26 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create onnxTensor 
+2025-04-22 22:22:26 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create onnxTensor 
+2025-04-22 22:22:26 INFO    [com.siameseNetwork.SiameseSigNetCompare] Run the onnx model 
+2025-04-22 22:22:26 INFO    [com.siameseNetwork.SiameseSigNetCompare] Extract embeddings 
+2025-04-22 22:22:26 INFO    [com.siameseNetwork.SiameseSigNetCompare] Distance between signatures: 2609.3675
+ 
+2025-04-22 22:22:34 INFO    [com.siameseNetwork.SiameseSigNetCompare] Validating images 
+2025-04-22 22:22:34 INFO    [com.siameseNetwork.SiameseSigNetCompare] Convert images to grayscale 
+2025-04-22 22:22:34 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing and converting images to new +input weights and heights and 32-bit float 1 channel images 
+2025-04-22 22:22:34 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing images 
+2025-04-22 22:22:34 INFO    [com.siameseNetwork.SiameseSigNetCompare] Resizing images 
+2025-04-22 22:22:34 INFO    [com.siameseNetwork.SiameseSigNetCompare] Creating tensors 
+2025-04-22 22:22:34 INFO    [com.siameseNetwork.SiameseSigNetCompare] Generate flat indexes for resized Images 
+2025-04-22 22:22:34 INFO    [com.siameseNetwork.SiameseSigNetCompare] Load onnx model configuration and run model with signatures 
+2025-04-22 22:22:34 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create the runtime environment 
+2025-04-22 22:22:34 INFO    [com.siameseNetwork.SiameseSigNetCompare] Load the ONNX model into a session 
+2025-04-22 22:22:34 INFO    [com.siameseNetwork.SiameseSigNetCompare] Prepare ONNX tensors with shape [1,1,128,128] 
+2025-04-22 22:22:34 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create onnxTensor 
+2025-04-22 22:22:34 INFO    [com.siameseNetwork.SiameseSigNetCompare] Create onnxTensor 
+2025-04-22 22:22:34 INFO    [com.siameseNetwork.SiameseSigNetCompare] Run the onnx model 
+2025-04-22 22:22:34 INFO    [com.siameseNetwork.SiameseSigNetCompare] Extract embeddings 
+2025-04-22 22:22:35 INFO    [com.siameseNetwork.SiameseSigNetCompare] Distance between signatures: 0.0000
+ 
