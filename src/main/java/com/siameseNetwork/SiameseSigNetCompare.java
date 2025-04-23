@@ -81,6 +81,7 @@ public class SiameseSigNetCompare {
             }
             float[] inputTensorA = new float[rows[0] * cols[0]];
             float[] inputTensorB = new float[rows[1] * cols[1]];
+            float [][] tensors = {inputTensorA, inputTensorB};
 
             log.info("Generate flat indexes for resized Images");
             for (int i = 0; i < resizedImages.length; i++) {
@@ -88,29 +89,11 @@ public class SiameseSigNetCompare {
                 int flatIndex = 0;
                 for (int y = 0; y < rows[i]; y++) {
                     for (int x = 0; x < cols[i]; x++) {
-                        inputTensorA[flatIndex++] = floatIndexer.get(y, x);
+                        tensors[i][flatIndex++] = floatIndexer.get(y, x);
                     }
                 }
                 floatIndexer.release();
             }
-
-            FloatIndexer fidx1 = resizedImages[0].createIndexer();
-            int flatIdx = 0;
-            for (int y = 0; y < rows[0]; y++) {
-                for (int x = 0; x < cols[0]; x++) {
-                    inputTensorA[flatIdx++] = fidx1.get(y, x);
-                }
-            }
-            fidx1.release();
-
-            FloatIndexer fidx2 = resizedImages[1].createIndexer();
-            int flatIdx2 = 0;
-            for (int y = 0; y < rows[1]; y++) {
-                for (int x = 0; x < cols[1]; x++) {
-                    inputTensorB[flatIdx2++] = fidx2.get(y, x);
-                }
-            }
-            fidx2.release();
 
             log.info("Load onnx model configuration and run model with signatures");
             OnnxModelVerifier onnxModelVerifier = new OnnxModelVerifier(this.onnxPath);
