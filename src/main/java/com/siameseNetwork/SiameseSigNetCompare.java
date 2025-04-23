@@ -10,6 +10,7 @@ import org.opencv.core.CvType;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.util.Arrays;
 import java.util.logging.Logger;
 
 
@@ -58,10 +59,6 @@ public class SiameseSigNetCompare {
 
             log.info("Convert images to grayscale");
             Mat[] grayImages = new Mat[images.length];
-            String[] grayNames = {
-                    "firstImageGrayscale",
-                    "secondImageGrayscale"
-            };
             for (int i = 0; i < images.length; i++) {
                 grayImages[i] = convertToGrayScale(images[i]);
             }
@@ -96,6 +93,24 @@ public class SiameseSigNetCompare {
                 }
                 floatIndexer.release();
             }
+
+            FloatIndexer fidx1 = resizedImages[0].createIndexer();
+            int flatIdx = 0;
+            for (int y = 0; y < rows[0]; y++) {
+                for (int x = 0; x < cols[0]; x++) {
+                    inputTensorA[flatIdx++] = fidx1.get(y, x);
+                }
+            }
+            fidx1.release();
+
+            FloatIndexer fidx2 = resizedImages[1].createIndexer();
+            int flatIdx2 = 0;
+            for (int y = 0; y < rows[1]; y++) {
+                for (int x = 0; x < cols[1]; x++) {
+                    inputTensorB[flatIdx2++] = fidx2.get(y, x);
+                }
+            }
+            fidx2.release();
 
             log.info("Load onnx model configuration and run model with signatures");
             OnnxModelVerifier onnxModelVerifier = new OnnxModelVerifier(this.onnxPath);
@@ -194,6 +209,14 @@ public class SiameseSigNetCompare {
             log.info("Error: One or both images could not be loaded.");
             throw new RuntimeException("Error: images are either empty or null. Cannot process image.");
         }
+    }
+
+    public static boolean almostEqual(float[] a, float[] b, float tol) {
+        if (a.length != b.length) return false;
+        for (int i = 0; i < a.length; i++) {
+            if (Math.abs(a[i] - b[i]) > tol) return false;
+        }
+        return true;
     }
 
 }
