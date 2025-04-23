@@ -10,7 +10,6 @@ import org.opencv.core.CvType;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
-import java.util.Arrays;
 import java.util.logging.Logger;
 
 
@@ -192,14 +191,6 @@ public class SiameseSigNetCompare {
             log.info("Error: One or both images could not be loaded.");
             throw new RuntimeException("Error: images are either empty or null. Cannot process image.");
         }
-    }
-
-    public static boolean almostEqual(float[] a, float[] b, float tol) {
-        if (a.length != b.length) return false;
-        for (int i = 0; i < a.length; i++) {
-            if (Math.abs(a[i] - b[i]) > tol) return false;
-        }
-        return true;
     }
 
 }
