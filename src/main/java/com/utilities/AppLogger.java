@@ -57,7 +57,7 @@ public class AppLogger {
         // Optional: File handler (uncomment to enable)
 
         try {
-            FileHandler fileHandler = new FileHandler("src/main/java/com/utilities/app.log", true);
+            FileHandler fileHandler = new FileHandler("log/app.log", true);
             fileHandler.setLevel(DEFAULT_LEVEL);
             fileHandler.setFormatter(consoleHandler.getFormatter());
             root.addHandler(fileHandler);

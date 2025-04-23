@@ -1,40 +1,41 @@
 package com.signatureGuard;
 
+import ai.onnxruntime.OrtException;
+import com.siameseNetwork.OnnxConfig;
 import com.siameseNetwork.SiameseSigNetCompare;
+import com.utilities.AppLogger;
 import org.bytedeco.opencv.global.opencv_imgproc;
 import org.bytedeco.opencv.opencv_core.Mat;
 import org.bytedeco.opencv.opencv_core.Size;
+import java.util.logging.Logger;
 
-import java.util.Arrays;
-import java.util.List;
+import static java.lang.Integer.parseInt;
 
 public class ResizeImage {
 
-    private static void displaySize(Mat image) {
-        System.out.printf(
-                "Image 1 Size (height x width):  %d x %d%n",
-                image.size().height(), image.size().width());
+    private static final Logger log =
+            AppLogger.getLogger(SiameseSigNetCompare.class);
+    private final String inputHeight;
+    private final String inputWidth;
+
+    public ResizeImage() throws OrtException {
+        OnnxConfig cfg = new OnnxConfig();
+        this.inputHeight = cfg.getInputHeight();
+        this.inputWidth = cfg.getInputWidth();
     }
 
-    public static Boolean areSameSize(
-            Mat image1, Mat image2) {
-        List<Mat> images = Arrays.asList(image1, image2);
-        images.forEach(ResizeImage::displaySize);
-        SiameseSigNetCompare.saveImageToDisk(image1, "Saved sourceSignatureA", "sourceSignatureA");
-        SiameseSigNetCompare.saveImageToDisk(image2, "Saved sourceSignatureB", "sourceSignatureB");
-
-        return image1.size().width() == image2.size().width() &&
-                image1.size().height() == image2.size().height();
-    }
-
-    public static Mat resizeImage(
+    public Mat resizeImage(
             Mat imageToBeResized
     ){
+        log.info("Resizing images");
         Mat resizedImage = new Mat();
         opencv_imgproc.resize(
                 imageToBeResized,
                 resizedImage,
-                new Size(128, 128));
+                new Size(
+                    parseInt(this.inputHeight),
+                    parseInt(this.inputWidth)
+                ));
         return resizedImage;
     }
 }

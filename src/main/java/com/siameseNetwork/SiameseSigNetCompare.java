@@ -1,131 +1,152 @@
 package com.siameseNetwork;
 
-import ai.onnxruntime.OnnxTensor;
 import ai.onnxruntime.OrtException;
-import ai.onnxruntime.OrtSession;
 import com.signatureGuard.ResizeImage;
 import com.utilities.AppLogger;
-import org.bytedeco.javacpp.indexer.UByteIndexer;
 import org.bytedeco.javacpp.indexer.FloatIndexer;
-import org.bytedeco.javacpp.indexer.Indexer;
-import org.bytedeco.opencv.global.opencv_core;
 import org.bytedeco.opencv.global.opencv_imgproc;
 import org.bytedeco.opencv.opencv_core.Mat;
-import org.bytedeco.opencv.opencv_core.Scalar;
-import org.bytedeco.opencv.opencv_core.Size;
 import org.opencv.core.CvType;
-import java.util.Arrays;
 
-import java.nio.FloatBuffer;
-import java.text.DecimalFormat;
-import java.util.List;
-import java.util.Map;
+import java.io.PrintWriter;
+import java.io.StringWriter;
 import java.util.logging.Logger;
-
-import static org.bytedeco.opencv.global.opencv_core.CV_8UC1;
-import static org.bytedeco.opencv.global.opencv_core.absdiff;
-import static org.bytedeco.opencv.global.opencv_imgcodecs.imwrite;
-import static org.bytedeco.opencv.global.opencv_imgproc.*;
-
-import com.siameseNetwork.OnnxModelVerifier;
 
 
 public class SiameseSigNetCompare {
 
-    private static final int KERNEL_SIZE = 3;
     private static final String imageDebugDir = "images_debug";
-    private static final double THRESHOLD = 0.5;
-    private static final Logger log = AppLogger.getLogger(SiameseSigNetCompare.class);
+    protected double THRESHOLD;
+    private static final Logger log =
+            AppLogger.getLogger(SiameseSigNetCompare.class);
+    private final String onnxPath;
 
+    public SiameseSigNetCompare() {
+        OnnxConfig cfg = new OnnxConfig();
+        this.onnxPath = cfg.getOnnxModelPath();
+        this.THRESHOLD = Double.parseDouble(cfg.getOnnxModelThreshold());
+    }
 
+    /**
+     * Compares two signature images and returns a human‑readable similarity metric.
+     *
+     * <p>This method validates that both input Mats are non‑null, non‑empty,
+     * and of the same dimensions, converts them to grayscale, prepares them for
+     * the ONNX model, computes their embeddings, calculates the Euclidean distance
+     * between those embeddings, and then formats that distance as a percentage
+     * similarity string.</p>
+     *
+     * @param signatureA the first signature image as an OpenCV Mat; must be non‑null,
+     *                   non‑empty, and the same size as {@code signatureB}
+     * @param signatureB the second signature image as an OpenCV Mat; must be non‑null,
+     *                   non‑empty, and the same size as {@code signatureA}
+     * @return a String representing how similar the two signatures are
+     *         (e.g. "Similarity: 84.21%")
+     * @throws IllegalArgumentException if either image is null, empty, or their sizes differ
+     * @throws OrtException if there is an error loading or running the ONNX Runtime model
+     */
     public String compareSignatures(
             Mat signatureA,
             Mat signatureB
     ) {
         try {
-            log.info("Loading images as grayscale");
+            Mat[] images = {signatureA, signatureB};
 
-            validateImages(signatureA, signatureB);
-
-            Mat img1 = convertToGrayScale(signatureA, "firstImageGrayscale");
-            Mat img2 = convertToGrayScale(signatureB, "secondImageGrayscale");
-
-            validateImages(img1, img2);
-
-            Mat resizedImage1 = ResizeImage.resizeImage(img1);
-            Mat resizedImage2 = ResizeImage.resizeImage(img2);
-
-            resizedImage1.convertTo(resizedImage1, CvType.CV_32F);
-            resizedImage2.convertTo(resizedImage2, CvType.CV_32F);
-
-            SiameseSigNetCompare.saveImageToDisk(
-                    resizedImage1, "Save Resized image 1", "resizedImage1");
-            SiameseSigNetCompare.saveImageToDisk(
-                    resizedImage2, "Save Resized image 2", "resizedImage2");
+            log.info("Validating images");
+            validateImages(images[0], images[1]);
 
 
-            int rows1 = resizedImage1.rows(), cols1 = resizedImage1.cols();
-            int rows2 = resizedImage2.rows(), cols2 = resizedImage2.cols();
-            float[] inputTensorA = new float[rows1 * cols1];
-            float[] inputTensorB = new float[rows2 * cols2];
-
-            FloatIndexer fidx1 = resizedImage1.createIndexer();
-            int flatIdx = 0;
-            for (int y = 0; y < rows1; y++) {
-                for (int x = 0; x < cols1; x++) {
-                    inputTensorA[flatIdx++] = fidx1.get(y, x);
-                }
+            log.info("Convert images to grayscale");
+            Mat[] grayImages = new Mat[images.length];
+            for (int i = 0; i < images.length; i++) {
+                grayImages[i] = convertToGrayScale(images[i]);
             }
-            fidx1.release();
 
-            FloatIndexer fidx2 = resizedImage2.createIndexer();
-            int flatIdx2 = 0;
-            for (int y = 0; y < rows2; y++) {
-                for (int x = 0; x < cols2; x++) {
-                    inputTensorB[flatIdx2++] = fidx2.get(y, x);
-                }
+            log.info("Resizing and converting images to new +" +
+                    "input weights and heights and 32-bit float 1 channel images");
+            Mat[] resizedImages = new Mat[images.length];
+            ResizeImage resizeImage = new ResizeImage();
+            for (int i = 0; i < grayImages.length; i++) {
+                resizedImages[i] = resizeImage.resizeImage(grayImages[i]);
+                resizedImages[i].convertTo(resizedImages[i], CvType.CV_32F);
             }
-            fidx2.release();
 
+            log.info("Creating tensors");
+            int[] rows = new int[resizedImages.length];
+            int[] cols = new int[resizedImages.length];
+            for (int i = 0; i < resizedImages.length; i++) {
+                rows[i] = resizedImages[i].rows();
+                cols[i] = resizedImages[i].cols();
+            }
+            float[] inputTensorA = new float[rows[0] * cols[0]];
+            float[] inputTensorB = new float[rows[1] * cols[1]];
+            float [][] tensors = {inputTensorA, inputTensorB};
 
-            boolean identical = Arrays.equals(inputTensorA, inputTensorB);
-            double distance = euclideanDistance(inputTensorA, inputTensorB);
-            boolean similar = almostEqual(inputTensorA, inputTensorB, 1e-3f);
+            log.info("Generate flat indexes for resized Images");
+            for (int i = 0; i < resizedImages.length; i++) {
+                FloatIndexer floatIndexer = resizedImages[i].createIndexer();
+                int flatIndex = 0;
+                for (int y = 0; y < rows[i]; y++) {
+                    for (int x = 0; x < cols[i]; x++) {
+                        tensors[i][flatIndex++] = floatIndexer.get(y, x);
+                    }
+                }
+                floatIndexer.release();
+            }
 
-            OnnxModelVerifier onnxVerifier = new OnnxModelVerifier();
-            float[][] embeddings = onnxVerifier.getEmbeddings(inputTensorA, inputTensorB);
-
-            // DEBUG: print first few values of each embedding to inspect differences
-            int newLength = 128;
-            System.out.println("Embedding A (first 5 vals): " +
-                    Arrays.toString(Arrays.copyOf(embeddings[0], newLength)));
-            System.out.println("Embedding B (first 5 vals): " +
-                    Arrays.toString(Arrays.copyOf(embeddings[1], newLength)));
+            log.info("Load onnx model configuration and run model with signatures");
+            OnnxModelVerifier onnxModelVerifier = new OnnxModelVerifier(this.onnxPath);
+            float[][] embeddings = onnxModelVerifier.getEmbeddings(
+                    inputTensorA, inputTensorB);
 
             double euclideanDistance = euclideanDistance(embeddings[0], embeddings[1]);
-            System.out.printf("Distance between signatures: %.4f\n", euclideanDistance);
+            log.info(String.format("Distance between signatures: %.4f\n", euclideanDistance));
 
-            if (distance < THRESHOLD) {
-                return "✔️ Signatures match";
+            if (euclideanDistance < THRESHOLD) {
+                return String.format(
+                        "✔️ Distance between signatures: %.4f\n." +
+                                "Euclidean distance Threshold: %.4f\n." +
+                                "Signatures match!",
+                        euclideanDistance, THRESHOLD);
             } else {
-                return "❌ Signatures do NOT match";
+                return String.format(
+                        "❌ Distance between signatures: %.4f\n." +
+                                "Euclidean distance Threshold: %.4f\n." +
+                                "Signatures do NOT match!",
+                        euclideanDistance, THRESHOLD);
             }
         } catch (OrtException e) {
-            e.printStackTrace();
-            return "There was an error";
+            return String.format(
+                    "There was an error. Review stacktrace: %s", stackTraceToString(e));
         }
-    }
-
-    public static boolean almostEqual(float[] a, float[] b, float tol) {
-        if (a.length != b.length) return false;
-        for (int i = 0; i < a.length; i++) {
-            if (Math.abs(a[i] - b[i]) > tol) return false;
-        }
-        return true;
     }
 
     /**
-     * Computes Euclidean distance between two vectors.
+     * Converts the full stack trace of the given {@link Throwable} into a single string.
+     *
+     * <p>This is useful for embedding the complete stack trace into log messages
+     * or error reports when you need the stack trace as text rather than printed
+     * directly to standard error.</p>
+     *
+     * @param t the {@code Throwable} whose stack trace should be captured
+     * @return a {@code String} containing the complete stack trace of {@code t}
+     */
+    private String stackTraceToString(Throwable t) {
+        StringWriter sw = new StringWriter();
+        t.printStackTrace(new PrintWriter(sw));
+        return sw.toString();
+    }
+
+    /**
+     * Computes the Euclidean distance between two equal‑length float vectors.
+     *
+     * <p>The Euclidean distance is defined as the square root of the sum of squared
+     * differences between corresponding elements of the two vectors.</p>
+     *
+     * @param a the first vector of floats
+     * @param b the second vector of floats
+     * @return the Euclidean distance between vectors {@code a} and {@code b}
+     * @throws IllegalArgumentException if {@code a} and {@code b} have different lengths
      */
     private double euclideanDistance(float[] a, float[] b) {
         double sum = 0;
@@ -136,22 +157,40 @@ public class SiameseSigNetCompare {
         return Math.sqrt(sum);
     }
 
-    private Mat convertToGrayScale(Mat signatureImage, String identifier) {
+    /**
+     * Converts the given OpenCV Mat to a single‑channel grayscale image.
+     *
+     * <p>This method applies OpenCV's {@code cvtColor} function with
+     * {@code COLOR_BGR2GRAY} to transform a 3‑channel BGR (or 4‑channel BGRA)
+     * image into a one‑channel grayscale image.</p>
+     *
+     * @param signatureImage the source Mat to convert; must be non‑null and not empty
+     * @return a new Mat containing the grayscale version of {@code signatureImage}
+     * @throws IllegalArgumentException if {@code signatureImage} is null or empty
+     */
+    private Mat convertToGrayScale(Mat signatureImage) {
         Mat grayScaleImage = new Mat();
-        opencv_imgproc.cvtColor(signatureImage, grayScaleImage, opencv_imgproc.COLOR_BGR2GRAY);
-        saveImageToDisk(grayScaleImage, "Saving grayscale image ", "grayscale_" + identifier);
+        opencv_imgproc.cvtColor(
+                signatureImage, grayScaleImage, opencv_imgproc.COLOR_BGR2GRAY);
         return grayScaleImage;
     }
 
+    /**
+     * Validates that two OpenCV Mats are ready for comparison.
+     *
+     * <p>This method ensures that both images are non-null, non-empty,
+     * and share the same dimensions (width and height). If any of these
+     * conditions fail, an {@link IllegalArgumentException} is thrown.</p>
+     *
+     * @param img1 the first image to validate; must be non-null and non-empty
+     * @param img2 the second image to validate; must be non-null and non-empty
+     * @throws RuntimeException if either image is null, empty, or if their sizes differ
+     */
     private void validateImages(Mat img1, Mat img2) {
         if (img1.empty() || img2.empty()) {
-            System.err.println("Error: One or both images could not be loaded.");
+            log.info("Error: One or both images could not be loaded.");
             throw new RuntimeException("Error: images are either empty or null. Cannot process image.");
         }
     }
 
-    public static void saveImageToDisk(Mat imageToSave, String message, String name) {
-        System.out.println(message);
-        imwrite(String.format("%s/%s.jpg", imageDebugDir, name), imageToSave);
-    }
 }

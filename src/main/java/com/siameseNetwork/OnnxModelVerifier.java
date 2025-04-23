@@ -4,39 +4,54 @@ import ai.onnxruntime.OnnxTensor;
 import ai.onnxruntime.OrtEnvironment;
 import ai.onnxruntime.OrtException;
 import ai.onnxruntime.OrtSession;
-
+import com.utilities.AppLogger;
 import java.nio.FloatBuffer;
 import java.util.Map;
+import java.util.logging.Logger;
+
 
 public class OnnxModelVerifier {
 
     private final OrtEnvironment env ;
     private final OrtSession session;
+    private static final Logger log =
+            AppLogger.getLogger(SiameseSigNetCompare.class);
 
-    public OnnxModelVerifier() throws OrtException {
-        // Create the runtime environment
+    public OnnxModelVerifier(
+            String onnxPath) throws OrtException {
+        log.info("Create the runtime environment");
         env = OrtEnvironment.getEnvironment();
-        // Load your ONNX model into a session
-        String onnxModelPath = "src/main/resources/models/siamese.onnx";
-        session = env.createSession(onnxModelPath, new OrtSession.SessionOptions());
+
+        log.info("Load the ONNX model into a session");
+        session = env.createSession(
+                onnxPath, new OrtSession.SessionOptions());
     }
 
-    public float[][] getEmbeddings(float[] inputA, float[] inputB) throws OrtException {
-        // Prepare ONNX tensors with shape [1,1,128,128]
-        OnnxTensor tensorA = OnnxTensor.createTensor(env, FloatBuffer.wrap(inputA), new long[]{1, 1, 128, 128});
-        OnnxTensor tensorB = OnnxTensor.createTensor(env, FloatBuffer.wrap(inputB), new long[]{1, 1, 128, 128});
+    public float[][] getEmbeddings(
+            float[] inputA,
+            float[] inputB) throws OrtException {
+        log.info("Prepare ONNX tensors with shape [1,1,128,128]");
+        OnnxTensor tensorA = this.createTensor(inputA);
+        OnnxTensor tensorB = this.createTensor(inputB);
 
-        // Run the model: names must match what you exported
+        log.info("Run the onnx model");
         Map<String, OnnxTensor> inputs = Map.of(
                 "signature_A", tensorA,
                 "signature_B", tensorB
         );
+
+        log.info("Extract embeddings");
         try (OrtSession.Result results = session.run(inputs)) {
-            // Extract output embeddings
-            float[][] embA = (float[][]) results.get(0).getValue(); // shape [1][128]
+            float[][] embA = (float[][]) results.get(0).getValue();
             float[][] embB = (float[][]) results.get(1).getValue();
             return new float[][] { embA[0], embB[0] };
         }
+    }
+
+    private OnnxTensor createTensor(float[] input) throws OrtException {
+        log.info("Create onnxTensor");
+        return OnnxTensor.createTensor(
+                env, FloatBuffer.wrap(input), new long[]{1, 1, 128, 128});
     }
 
 }

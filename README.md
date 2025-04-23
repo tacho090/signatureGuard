@@ -58,5 +58,7 @@ sudo apt install openjdk-21-jdk
 6. mvn clean compile
 7. mvn spring-boot:run
 
+For debugging
+https://github.com/tacho090/signatureGuard/blob/58830910ca3e18b085da39476a6ef2a3eaa456ee/src/main/java/com/siameseNetwork/SiameseSigNetCompare.java
 
 2. 
