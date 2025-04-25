@@ -45,4 +45,4 @@ images_debug/
 src/main/resources
 
 ### Logs ###
-log/
+log/app.log
