@@ -45,7 +45,8 @@ firmas/
 images_debug/
 
 ### Project Resources ###
-src/main/resources
+*/resources/
+*.onnx
 
 ### Logs ###
-log/app.log
+*.log
