@@ -49,4 +49,5 @@ images_debug/
 *.onnx
 
 ### Logs ###
+log/
 *.log
