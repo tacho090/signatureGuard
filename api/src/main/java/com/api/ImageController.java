@@ -1,7 +1,7 @@
 package com.api;
 
-import com.signatureGuard.ImageProcessor;
-import com.signatureGuard.ImageReader;
+import com.signatureGuardProcessor.ImageProcessor;
+import com.signatureGuardProcessor.ImageReader;
 import org.bytedeco.opencv.opencv_core.Mat;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;

@@ -1,4 +1,4 @@
-package com.signatureGuard;
+package com.signatureGuardProcessor;
 
 import org.bytedeco.opencv.opencv_core.Mat;
 import static org.bytedeco.opencv.global.opencv_imgcodecs.imread;
