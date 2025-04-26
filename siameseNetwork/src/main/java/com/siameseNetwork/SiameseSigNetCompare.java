@@ -1,7 +1,7 @@
 package com.siameseNetwork;
 
 import ai.onnxruntime.OrtException;
-import com.signatureGuard.ResizeImage;
+import com.signatureGuardProcessor.ResizeImage;
 import com.utilities.AppLogger;
 import org.bytedeco.javacpp.indexer.FloatIndexer;
 import org.bytedeco.opencv.global.opencv_imgproc;
