@@ -11,6 +11,10 @@ target/
 *.iws
 *.iml
 *.ipr
+.idea/
+
+### VSCode ###
+.vscode/
 
 ### Eclipse ###
 .apt_generated
@@ -42,7 +46,9 @@ firmas/
 images_debug/
 
 ### Project Resources ###
-src/main/resources
+*/resources/
+*.onnx
 
 ### Logs ###
 log/
+*.log
