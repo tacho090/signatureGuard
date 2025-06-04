@@ -66,6 +66,12 @@ mvn clean compile
 mvn spring-boot:run
 ```
 
+6. Run the ui:
+```shell
+cd ui
+mvn clean compile exec:java
+```
+
 ## Troubleshooting
 
 ### Issues:
